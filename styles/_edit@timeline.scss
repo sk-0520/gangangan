@@ -18,6 +18,7 @@
 		.cell {
 			min-width: $cell-width;
 			max-width: $cell-width;
+			filter: invert(100%) grayscale(100%) contrast(100);
 		}
 
 		.year-month {
