@@ -1,14 +1,24 @@
+import { EditContext } from '@/models/data/context/EditContext';
+import { useLocale } from '@/models/locales/locale';
 import { NextPage } from 'next';
+import { useContext } from 'react';
 
 const Component: NextPage = () => {
-	Array.from(Array(5), (_, index) => console.log(index))
+	const locale = useLocale();
+	const editContext = useContext(EditContext);
+
+	const heightStyle = {
+		maxHeight: editContext.design.cell.maxHeight,
+		minHeight: editContext.design.cell.minHeight,
+	}
+
 	return (
 		<div id='tasks'>
 			<ul>
 				<>
 					{Array.from(Array(400), (_, index) => {
 						return (
-							<li>
+							<li style={ heightStyle }>
 								<div className='timeline-header'>
 									<div className='timeline-id'>{index}</div>
 									<div className='timeline-task'>XX作業</div>

@@ -16,16 +16,36 @@ const Component: NextPage = () => {
 	var diff = range.to.getTime() - range.from.getTime();
 	const days = diff / (24 * 60 * 60 * 1000);
 
-	const prev = {
-		year: range.to.getFullYear(),
-		month: range.to.getMonth(),
-	}
-
 	const dates = Array.from(Array(days), (_, index) => {
 		const date = new Date(range.from.getTime())
 		date.setDate(date.getDate() + index);
 		return date;
 	});
+
+	const yearMonthBucket: Array<{ year: number, month: number, length: number }> = [];
+	for (const date of dates) {
+		const yearTargets = yearMonthBucket.filter(a => a.year === date.getFullYear());
+		if (yearTargets.length) {
+			const target = yearTargets.find(a => a.month === date.getMonth());
+			if (target) {
+				target.length += 1;
+			} else {
+				yearMonthBucket.push({ year: date.getFullYear(), month: date.getMonth(), length: 1 });
+			}
+		} else {
+			yearMonthBucket.push({ year: date.getFullYear(), month: date.getMonth(), length: 1 });
+		}
+	}
+	yearMonthBucket.sort((a, b) => {
+		const year = a.year - b.year;
+		if(year) {
+			return year;
+		}
+		return a.month - b.month;
+	})
+
+
+	const cellStyle = editContext.design.cell;
 
 	return (
 		<div id='days-header'>
@@ -33,32 +53,27 @@ const Component: NextPage = () => {
 				<tbody>
 					<thead>
 						<tr className='year-month'>
-							{dates.map(i => {
-								const year = i.getFullYear();
-								const yearEquals = prev.year === year;
-								prev.year = year;
+							{yearMonthBucket.map(a => {
 
-								const month = i.getMonth();
-								const monthEquals = prev.month === month;
-								prev.month = month;
+								const display = `${a.year}/${a.month + 1}`;
 
 								return (
-									<td className={'cell' + (yearEquals && monthEquals ? ' equals' : '')}>{year}/{i.getMonth() + 1}</td>
+									<td className={'cell'} colSpan={a.length} style={cellStyle}>{display}</td>
 								);
 							})}
 						</tr>
 					</thead>
 					<tbody>
 						<tr className='day'>
-							{dates.map(i => <td className='cell'>{i.getDate()}</td>)}
+							{dates.map(a => <td className='cell' style={cellStyle}>{a.getDate()}</td>)}
 						</tr>
 						<tr className='week'>
-							{dates.map(i => <td className='cell'>{locale.calendar.week.short[toWeekDay(i.getDay())]}</td>)}
+							{dates.map(a => <td className='cell' style={cellStyle}>{locale.calendar.week.short[toWeekDay(a.getDay())]}</td>)}
 						</tr>
 					</tbody>
 					<tbody>
 						<tr className='pin'>
-							{dates.map(i => <td className='cell'>@</td>)}
+							{dates.map(a => <td className='cell' style={cellStyle}>@</td>)}
 						</tr>
 					</tbody>
 				</tbody>

@@ -1,7 +1,4 @@
 #timeline {
-	$cell-width: 3ch;
-	$cell-height: 1.5em;
-
 	$timeline-header-id-width: 4ch;
 	$timeline-header-task-width: 20ch;
 	$timeline-header-kind-width: 5ch;
@@ -83,15 +80,10 @@
 		}
 
 		.cell {
-			min-width: $cell-width;
-			max-width: $cell-width;
 			filter: invert(100%) grayscale(100%) contrast(100);
 		}
 
 		.year-month {
-			.equals {
-				color: rgba(0, 0, 0, 0);
-			}
 		}
 
 		.day {
@@ -111,6 +103,21 @@
 		left: 0;
 		grid-row-start: 2;
 		grid-column-start: 1;
+	}
 
+	#viewer {
+		background: skyblue;
+
+		width: max-content;
+		height: max-content;
+
+		grid-row-start: 2;
+		grid-column-start: 2;
+
+		canvas {
+			background: darkblue;
+			width: 100%;
+			height: 100%;
+		}
 	}
 }
