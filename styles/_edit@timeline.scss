@@ -1,15 +1,82 @@
 #timeline {
-	$row-header-width: 200px;
-
 	$cell-width: 3ch;
+	$cell-height: 1.5em;
+
+	$timeline-header-id-width: 4ch;
+	$timeline-header-task-width: 20ch;
+	$timeline-header-kind-width: 5ch;
+	$timeline-header-workload-width: 4ch;
+	$timeline-header-resource-width: 6ch;
+	$timeline-header-from-width: 8ch;
+	$timeline-header-to-width: 8ch;
+	$timeline-header-progress-width: 4ch;
+	$timeline-header-width: $timeline-header-id-width + $timeline-header-task-width + $timeline-header-kind-width +
+		$timeline-header-workload-width + $timeline-header-resource-width + $timeline-header-from-width +
+		$timeline-header-to-width + $timeline-header-progress-width;
+
+	$app-header-height: 80px;
+
+	display: grid;
+	width: max-content;
+
+	.timeline-header {
+		background: yellow;
+		display: inline-flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: center;
+
+		.timeline-id {
+			width: $timeline-header-id-width;
+		}
+		.timeline-task {
+			width: $timeline-header-task-width;
+		}
+		.timeline-kind {
+			width: $timeline-header-kind-width;
+		}
+		.timeline-workload {
+			width: $timeline-header-workload-width;
+		}
+		.timeline-resource {
+			width: $timeline-header-resource-width;
+		}
+		.timeline-from {
+			width: $timeline-header-from-width;
+		}
+		.timeline-to {
+			width: $timeline-header-to-width;
+		}
+		.timeline-progress {
+			width: $timeline-header-progress-width;
+		}
+	}
 
 	#hidariue {
 		background-color: lime;
-		width: $row-header-width;
+
+		z-index: 2;
+		position: sticky;
+		top: 0;
+		left: 0;
+		grid-row-start: 1;
+		grid-column-start: 1;
+
+		height: $app-header-height;
+		width: $timeline-header-width;
 	}
 
-	#time-header {
+	#days-header {
 		background-color: pink;
+
+		z-index: 1;
+		position: sticky;
+		top: 0;
+		grid-row-start: 1;
+		grid-column-start: 2;
+
+		height: $app-header-height;
+
 		table {
 			table-layout: fixed;
 			// white-space: nowrap;
@@ -34,5 +101,16 @@
 		.week {
 			text-align: center;
 		}
+	}
+
+	#tasks {
+		background: orange;
+
+		z-index: 0;
+		position: sticky;
+		left: 0;
+		grid-row-start: 2;
+		grid-column-start: 1;
+
 	}
 }

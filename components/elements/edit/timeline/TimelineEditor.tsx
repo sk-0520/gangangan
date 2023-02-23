@@ -1,12 +1,14 @@
 import { NextPage } from 'next';
 import TimelineHidariue from './TimelineHidariue';
-import TimelineTimeHeader from './TimelineTimeHeader';
+import TimelineDaysHeader from './TimelineDaysHeader';
+import TimelineTasks from './TimelineTasks';
 
 const Component: NextPage = () => {
 	return (
 		<div id='timeline'>
 			<TimelineHidariue />
-			<TimelineTimeHeader />
+			<TimelineDaysHeader />
+			<TimelineTasks />
 		</div>
 	);
 };

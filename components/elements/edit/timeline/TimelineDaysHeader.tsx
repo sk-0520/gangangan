@@ -8,27 +8,27 @@ const Component: NextPage = () => {
 	const locale = useLocale();
 	const editContext = useContext(EditContext);
 
-	const [rangeFrom] = useState(new Date(editContext.data.setting.calendar.range.from));
-	const [rangeTo] = useState(new Date(editContext.data.setting.calendar.range.to));
-	console.log(rangeFrom);
-	console.log(rangeTo);
+	const range = {
+		from: new Date(editContext.data.setting.calendar.range.from),
+		to: new Date(editContext.data.setting.calendar.range.to),
+	};
 
-	var diff = rangeTo.getTime() - rangeFrom.getTime();
+	var diff = range.to.getTime() - range.from.getTime();
 	const days = diff / (24 * 60 * 60 * 1000);
 
 	const prev = {
-		year: rangeTo.getFullYear(),
-		month: rangeTo.getMonth(),
+		year: range.to.getFullYear(),
+		month: range.to.getMonth(),
 	}
 
 	const dates = Array.from(Array(days), (_, index) => {
-		const date = new Date(rangeFrom.getTime())
+		const date = new Date(range.from.getTime())
 		date.setDate(date.getDate() + index);
 		return date;
 	});
 
 	return (
-		<div id='time-header'>
+		<div id='days-header'>
 			<table>
 				<tbody>
 					<thead>
