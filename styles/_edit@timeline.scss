@@ -1,19 +1,10 @@
 #timeline {
 	$row-header-width: 200px;
-
 	$cell-width: 3ch;
+	$cell-height: 1ch;
 
-	#hidariue {
-		background-color: lime;
-		width: $row-header-width;
-	}
-
-	#time-header {
-		background-color: pink;
-		table {
-			table-layout: fixed;
-			// white-space: nowrap;
-		}
+	table {
+		table-layout: fixed;
 
 		.cell {
 			min-width: $cell-width;
@@ -21,18 +12,55 @@
 			filter: invert(100%) grayscale(100%) contrast(100);
 		}
 
-		.year-month {
-			.equals {
-				color: rgba(0, 0, 0, 0);
+		td {
+			border: 1px solid red;
+		}
+
+		#time-header {
+			background-color: pink;
+
+			.year-month {
+				.equals {
+					color: rgba(0, 0, 0, 0);
+				}
 			}
-		}
 
-		.day {
-			text-align: center;
-		}
+			.day {
+				text-align: center;
+			}
 
-		.week {
-			text-align: center;
+			.week {
+				text-align: center;
+			}
+
+			.util {
+				.timeline {
+					&.id {
+						min-width: 4ch;
+					}
+					&.task {
+						min-width: 20ch;
+					}
+					&.kind {
+						min-width: 4ch;
+					}
+					&.workload {
+						min-width: 5ch;
+					}
+					&.resource {
+						min-width: 8ch;
+					}
+					&.from {
+						min-width: 6ch;
+					}
+					&.to {
+						min-width: 6ch;
+					}
+					&.percent {
+						min-width: 4ch;
+					}
+				}
+			}
 		}
 	}
 }
