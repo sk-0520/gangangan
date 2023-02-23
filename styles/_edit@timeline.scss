@@ -17,7 +17,6 @@
 	width: max-content;
 
 	.timeline-header {
-		background: yellow;
 		display: inline-flex;
 		flex-direction: row;
 		flex-wrap: nowrap;
@@ -60,7 +59,7 @@
 		grid-column-start: 1;
 
 		height: $app-header-height;
-		width: $timeline-header-width;
+		//width: $timeline-header-width;
 	}
 
 	#days-header {
@@ -103,6 +102,10 @@
 		left: 0;
 		grid-row-start: 2;
 		grid-column-start: 1;
+
+		.task {
+
+		}
 	}
 
 	#viewer {

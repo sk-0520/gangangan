@@ -78,9 +78,6 @@ export interface TaskTimelineItemWork {
 }
 
 export interface TaskTimelineItem {
-	static: {
-		target: ISO8601.DateTime;
-	},
 	prev: {
 		items: Array<TaskTimelineId>;
 	}
