@@ -1,7 +1,7 @@
 import { EditContext } from '@/models/data/context/EditContext';
 import { useLocale } from '@/models/locales/locale';
 import { NextPage } from 'next';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import * as Timeline from "../../../../models/data/setting/Timeline";
 
 interface Props {
@@ -13,6 +13,14 @@ const Component: NextPage<Props> = (props: Props) => {
 	const locale = useLocale();
 	const editContext = useContext(EditContext);
 
+	const [subject, setSubject] = useState(props.timeline.subject);
+
+
+	function handleSubject(s: string) {
+		setSubject(s);
+		props.timeline.subject = s;
+	}
+
 	return (
 		<div className='task'>
 			<div className='timeline-header'>
@@ -20,22 +28,17 @@ const Component: NextPage<Props> = (props: Props) => {
 					{props.mode === 'edit'
 						? (
 							<>{props.timeline.id}</>
-						): (
+						) : (
 							<></>
 						)
 					}
 				</div>
 				<div className='timeline-task'>
-				{props.mode === 'edit'
-						? (
-							<input
-								type='text'
-								defaultValue={props.timeline.subject}
-							/>
-						): (
-							<></>
-						)
-					}
+					<input
+						type='text'
+						value={subject}
+						onChange={ev => handleSubject(ev.target.value)}
+					/>
 				</div>
 				<div className='timeline-kind'>種別</div>
 				<div className='timeline-workload'>工数</div>
