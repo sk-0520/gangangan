@@ -36,10 +36,10 @@ const Component: NextPage = () => {
 			{/* <TimelineTimeHeader /> */}
 
 			<table>
-				<thead id='time-header'>
+				<thead id='time-header' className='lock'>
 					<tr className='year-month'>
 						<>
-							<th colSpan={8}>{editContext.data.setting.name}</th>
+							<th className='lock' colSpan={8}>{editContext.data.setting.name}</th>
 
 							{dates.map(i => {
 								const year = i.getFullYear();
@@ -58,7 +58,7 @@ const Component: NextPage = () => {
 					</tr>
 					<tr className='day'>
 						<>
-							<th colSpan={8}>
+							<th className='lock' colSpan={8}>
 								<time>{editContext.data.setting.calendar.range.from}</time>
 								&nbsp;-&gt;&nbsp;
 								<time>{editContext.data.setting.calendar.range.to}</time>
@@ -73,7 +73,7 @@ const Component: NextPage = () => {
 					</tr>
 					<tr className='week'>
 						<>
-							<th colSpan={8}></th>
+							<th className='lock' colSpan={8}></th>
 
 							{dates.map(i => {
 								return (
@@ -84,14 +84,14 @@ const Component: NextPage = () => {
 					</tr>
 					<tr className='util'>
 						<>
-							<th className='timeline id'>#</th>
-							<th className='timeline task'>タスク</th>
-							<th className='timeline kind'>先行</th>
-							<th className='timeline workload'>工数</th>
-							<th className='timeline resource'>割当</th>
-							<th className='timeline from'>開始</th>
-							<th className='timeline to'>終了</th>
-							<th className='timeline percent'>進捗</th>
+							<th className='lock timeline id'>#</th>
+							<th className='lock timeline task'>タスク</th>
+							<th className='lock timeline kind'>先行</th>
+							<th className='lock timeline workload'>工数</th>
+							<th className='lock timeline resource'>割当</th>
+							<th className='lock timeline from'>開始</th>
+							<th className='lock timeline to'>終了</th>
+							<th className='lock timeline percent'>進捗</th>
 
 							{dates.map(i => {
 								return (
@@ -102,17 +102,17 @@ const Component: NextPage = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{Array.from(Array(120), (_, __) => {
+					{Array.from(Array(120), (_, index) => {
 						return (
 							<tr>
-								<td className='timeline id'>#</td>
-								<td className='timeline task'>task</td>
-								<td className='timeline kind'>kind</td>
-								<td className='timeline workload'>workload</td>
-								<td className='timeline resource'>resource</td>
-								<td className='timeline from'>from</td>
-								<td className='timeline to'>to</td>
-								<td className='timeline percent'>percent</td>
+								<td className='lock timeline id'>{index}</td>
+								<td className='lock timeline task'>task</td>
+								<td className='lock timeline kind'>kind</td>
+								<td className='lock timeline workload'>workload</td>
+								<td className='lock timeline resource'>resource</td>
+								<td className='lock timeline from'>from</td>
+								<td className='lock timeline to'>to</td>
+								<td className='lock timeline percent'>percent</td>
 
 								{dates.map(i => {
 									return (

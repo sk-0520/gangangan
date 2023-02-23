@@ -6,6 +6,19 @@
 	table {
 		table-layout: fixed;
 
+		thead.lock {
+			/* 縦スクロール時に固定する */
+			position: sticky;
+			top: 0;
+			z-index: 2;
+		}
+		th.lock, td.lock {
+			position: sticky;
+			top: 0;
+			left: 0;
+			z-index: 1;
+		}
+
 		.cell {
 			min-width: $cell-width;
 			max-width: $cell-width;
