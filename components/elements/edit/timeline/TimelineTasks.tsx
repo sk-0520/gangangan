@@ -35,7 +35,7 @@ const Component: NextPage<Props> = (props: Props) => {
 						return (
 							<>
 								<li key={a.id} style={heightStyle}>
-									<TimelineTaskEditor mode='edit' timeline={a} />
+									<TimelineTaskEditor timeline={a} />
 								</li>
 							</>
 						);
@@ -44,7 +44,6 @@ const Component: NextPage<Props> = (props: Props) => {
 
 				<hr />
 
-				<TimelineTaskEditor mode='new' timeline={newTimeline} />
 				<button type='button' onClick={handleAddTask}>add new task</button>
 			</>
 		</div>
@@ -59,6 +58,7 @@ function createEmptyTimeline(): Timeline.TaskTimeline {
 		kind: "task",
 		subject: "NEW",
 		comment: "",
+		type: "group",
 		group: {},
 		item: {
 			prev: {

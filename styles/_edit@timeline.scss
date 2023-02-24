@@ -30,9 +30,17 @@
 		}
 		.timeline-kind {
 			width: $timeline-header-kind-width;
+
+			input[type="number"] {
+				width: 100%;
+			}
 		}
 		.timeline-workload {
 			width: $timeline-header-workload-width;
+
+			input[type="number"] {
+				width: 100%;
+			}
 		}
 		.timeline-resource {
 			width: $timeline-header-resource-width;
@@ -104,7 +112,6 @@
 		grid-column-start: 1;
 
 		.task {
-
 		}
 	}
 

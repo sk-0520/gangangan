@@ -88,6 +88,7 @@ export interface TaskTimelineItem {
 export interface TaskTimeline extends Timeline {
 	kind: "task";
 	id: TaskTimelineId;
+	type: TaskTimelineType;
 	group: TaskTimelineGroup;
 	item: TaskTimelineItem;
 }

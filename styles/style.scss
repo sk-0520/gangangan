@@ -1,6 +1,10 @@
 @import 'reset-css';
 @import 'react-tabs/style/react-tabs.css';
 
+* {
+	box-sizing: border-box;
+}
+
 @import 'base';
 @import 'html/input';
 
