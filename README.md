@@ -64,7 +64,8 @@
 		],
 		"end": "RGB",
 	},
-	"timelines": [
+	"tasks": [
+		/*
 		{
 			"kind": "marker",
 			"scope": "global|local|slim",
@@ -84,46 +85,46 @@
 			"target": "ISO8601",
 			"comment": ""
 		},
+		*/
 		{
-			"kind": "task",
-			"id": "<TASK-TIMELINE-ID>",
+			"kind": "group",
+			"id": "<TASK-TIMELINE-GROUP-ID>",
 			"subject": "タイムライン名",
 			"type": "group|item",
-			// type: group
-			"group": {
-				// なんもねぇなぁ
+			"parentGroup": "<GROUP-TIMELINE-ID>" | null,
+		}
+		{
+			"kind": "item",
+			"id": "<TASK-TIMELINE-ITEM-ID>",
+			"subject": "タイムライン名",
+			// 固定と先行が設定されている場合最大を使用する
+			// 固定
+			"static": {
+				"target": "ISO8601",
 			},
-			// type: item
-			"item": {
-				// 固定と先行が設定されている場合最大を使用する
-				// 固定
-				"static": {
-					"target": "ISO8601",
-				},
-				// 先行 複数指定は全先行が終了する必要あり
-				"prev": {
-					"items": [
-						"<TASK-TIMELINE-ID>",
-					]
-				},
-				"range": "ISO8601時刻",
-				"works": [
-					{
-						"member": "<MEMBER-ID>",
-						"state": "enabled|disabled|sleep",
-						"progress": 0-1,
-						"history": [
-							// 0: first history
-							{
-								"progress": 0-1,
-								"version": "<VERSION-ID>",
-								// あとどれくらいで終わんの？
-								"more": "ISO8601時刻"
-							}
-						]
-					}
+			// 先行 複数指定は全先行が終了する必要あり
+			"prev": {
+				"items": [
+					"<TASK-TIMELINE-ID>",
 				]
 			},
+			"range": "ISO8601時刻",
+			"works": [
+				{
+					"member": "<MEMBER-ID>",
+					"state": "enabled|disabled|sleep",
+					"progress": 0-1,
+					"history": [
+						// 0: first history
+						{
+							"progress": 0-1,
+							"version": "<VERSION-ID>",
+							// あとどれくらいで終わんの？
+							"more": "ISO8601時刻"
+						}
+					]
+				}
+			],
 			"comment": ""
 		},
 	],
