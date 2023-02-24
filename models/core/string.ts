@@ -1,5 +1,5 @@
-import * as types from './types';
-import * as regex from './regex';
+import * as regex from "./regex";
+import * as types from "./types";
 
 /**
  * 空文字列か。
@@ -70,7 +70,7 @@ export function trimStart(s: string, characters: ReadonlySet<string> | null = nu
 		return s.substring(i);
 	}
 
-	return '';
+	return "";
 }
 
 /**
@@ -94,7 +94,7 @@ export function trimEnd(s: string, characters: ReadonlySet<string> | null = null
 		return s.substring(0, s.length - i);
 	}
 
-	return '';
+	return "";
 }
 
 /**
@@ -115,14 +115,14 @@ export function trim(s: string, characters: ReadonlySet<string> | null = null): 
 
 export function replaceAllImpl(source: string, searchValue: string | RegExp, replaceValue: string): string {
 	if (searchValue instanceof RegExp) {
-		const flags = searchValue.flags.includes('g')
+		const flags = searchValue.flags.includes("g")
 			? searchValue.flags
-			: searchValue.flags + 'g'
+			: searchValue.flags + "g"
 			;
 		return source.replace(new RegExp(searchValue.source, flags), replaceValue);
 	}
 
-	return source.replace(new RegExp(regex.escape(searchValue), 'g'), replaceValue);
+	return source.replace(new RegExp(regex.escape(searchValue), "g"), replaceValue);
 }
 
 export function replaceAll(source: string, searchValue: string | RegExp, replaceValue: string): string {
@@ -151,7 +151,7 @@ export function toBoolean(s: string | null | undefined): boolean {
 		return false;
 	}
 
-	return s.toLowerCase() === 'true';
+	return s.toLowerCase() === "true";
 }
 
 export const enum MatchMode {
@@ -200,14 +200,13 @@ class MatchResultImpl {
 
 	public get regex(): RegExp {
 		if (!this._regex) {
-			throw new Error('regex');
+			throw new Error("regex");
 		}
 
 		return this._regex;
 	}
 
 	//#endregion
-
 
 	//#region function
 
@@ -283,14 +282,14 @@ function matchPerfect(input: string, pattern: string, ignoreCase: boolean): Matc
 }
 
 function matchRegex(input: string, pattern: string, ignoreCase: boolean): MatchResultImpl {
-	const flags = ignoreCase ? 'gi' : 'g';
+	const flags = ignoreCase ? "gi" : "g";
 	try {
 		const regex = new RegExp(pattern, flags);
 		if (regex.test(input)) {
 			return MatchResultImpl.matchedRegex(regex);
 		}
 	} catch (ex) {
-		console.warn('matchRegex', ex);
+		console.warn("matchRegex", ex);
 	}
 
 	return MatchResultImpl.none();

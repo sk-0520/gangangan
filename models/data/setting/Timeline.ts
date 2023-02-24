@@ -4,11 +4,11 @@ import * as Member from "./Member";
 import * as Version from "./Version";
 
 export type TimelineKind =
-	'marker'
+	"marker"
 	|
-	'pin'
+	"pin"
 	|
-	'task'
+	"task"
 	;
 
 export interface Timeline {
@@ -18,15 +18,15 @@ export interface Timeline {
 }
 
 export type MarkerTimelineScope =
-	'global'
+	"global"
 	|
-	'local'
+	"local"
 	|
-	'slim'
+	"slim"
 	;
 
 export interface MarkerTimeline extends Timeline {
-	kind: 'marker';
+	kind: "marker";
 	color: Color;
 	scope: MarkerTimelineScope;
 	target: ISO8601.DateTime;
@@ -34,13 +34,13 @@ export interface MarkerTimeline extends Timeline {
 }
 
 export type PinTimelineScope =
-	'pin'
+	"pin"
 	|
-	'line'
+	"line"
 	;
 
 export interface PinTimeline extends Timeline {
-	kind: 'pin';
+	kind: "pin";
 	color: Color;
 	scope: PinTimelineScope;
 	target: ISO8601.DateTime;
@@ -48,19 +48,19 @@ export interface PinTimeline extends Timeline {
 
 export type TaskTimelineId = string;
 export type TaskTimelineType =
-	'group'
+	"group"
 	|
-	'item'
+	"item"
 	;
 
 export interface TaskTimelineGroup { }
 
 type TaskTimelineItemWorkState =
-	'enabled'
+	"enabled"
 	|
-	'disabled'
+	"disabled"
 	|
-	'sleep'
+	"sleep"
 	;
 
 type TaskTimelineItemWorkProgress = number;
@@ -86,7 +86,7 @@ export interface TaskTimelineItem {
 }
 
 export interface TaskTimeline extends Timeline {
-	kind: 'task';
+	kind: "task";
 	id: TaskTimelineId;
 	group: TaskTimelineGroup;
 	item: TaskTimelineItem;

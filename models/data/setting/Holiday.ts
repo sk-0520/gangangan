@@ -1,10 +1,10 @@
-import { WeekDay } from "./WeekDay";
 import * as ISO8601 from "./ISO8601";
+import { WeekDay } from "./WeekDay";
 
 export type  HolidayKind =
-	'holiday'
+	"holiday"
 	|
-	'special'
+	"special"
 ;
 
 export interface HolidayEvent {

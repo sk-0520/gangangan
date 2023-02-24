@@ -3,8 +3,6 @@
 
 // 手動 ---------------------
 
-
-
 // 自動 ---------------------
 
 /**
@@ -13,7 +11,7 @@
 export class NotImplementedError extends Error {
 	constructor(message?: string | undefined) {
 		super(message);
-		this.name = 'NotImplementedError';
+		this.name = "NotImplementedError";
 	}
 }
 
@@ -23,7 +21,7 @@ export class NotImplementedError extends Error {
 export class NotSupportedError extends Error {
 	constructor(message?: string | undefined) {
 		super(message);
-		this.name = 'NotSupportedError';
+		this.name = "NotSupportedError";
 	}
 }
 
@@ -33,7 +31,7 @@ export class NotSupportedError extends Error {
 export class InvalidOperationError extends Error {
 	constructor(message?: string | undefined) {
 		super(message);
-		this.name = 'InvalidOperationError';
+		this.name = "InvalidOperationError";
 	}
 }
 
@@ -43,7 +41,7 @@ export class InvalidOperationError extends Error {
 export class MismatchArgumentError extends Error {
 	constructor(message?: string | undefined) {
 		super(message);
-		this.name = 'MismatchArgumentError';
+		this.name = "MismatchArgumentError";
 	}
 }
 
@@ -53,7 +51,7 @@ export class MismatchArgumentError extends Error {
 export class ArgumentError extends Error {
 	constructor(message?: string | undefined) {
 		super(message);
-		this.name = 'ArgumentError';
+		this.name = "ArgumentError";
 	}
 }
 
@@ -63,7 +61,7 @@ export class ArgumentError extends Error {
 export class ParseError extends Error {
 	constructor(message?: string | undefined) {
 		super(message);
-		this.name = 'ParseError';
+		this.name = "ParseError";
 	}
 }
 
@@ -73,7 +71,7 @@ export class ParseError extends Error {
 export class DomError extends Error {
 	constructor(message?: string | undefined) {
 		super(message);
-		this.name = 'DomError';
+		this.name = "DomError";
 	}
 }
 
@@ -83,7 +81,7 @@ export class DomError extends Error {
 export class ElementTypeError extends DomError {
 	constructor(message?: string | undefined) {
 		super(message);
-		this.name = 'ElementTypeError';
+		this.name = "ElementTypeError";
 	}
 }
 
@@ -93,7 +91,7 @@ export class ElementTypeError extends DomError {
 export class NotFoundDomSelectorError extends DomError {
 	constructor(message?: string | undefined) {
 		super(message);
-		this.name = 'NotFoundDomSelectorError';
+		this.name = "NotFoundDomSelectorError";
 	}
 }
 

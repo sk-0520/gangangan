@@ -1,10 +1,11 @@
-import { NextPage } from 'next';
-import { NextRouter, useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
-import Layout from '@/components/layout/Layout';
-import * as Goto from '@/models/Goto';
-import { EditData } from '@/models/data/EditData';
-import * as Setting from '@/models/data/setting/Setting';
+import { NextPage } from "next";
+import { NextRouter, useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+
+import Layout from "@/components/layout/Layout";
+import * as Goto from "@/models/Goto";
+import { EditData } from "@/models/data/EditData";
+import * as Setting from "@/models/data/setting/Setting";
 
 interface LoadInput {
 	files: FileList;
@@ -19,7 +20,7 @@ const Load: NextPage = () => {
 			<form onSubmit={handleSubmit(data => onSubmit(data, router))}>
 				<dl className='inputs'>
 					<dt>ファイル</dt>
-					<input type='file' {...register('files')} />
+					<input type='file' {...register("files")} />
 				</dl>
 
 				<button className='action'>作業開始</button>

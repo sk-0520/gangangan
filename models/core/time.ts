@@ -1,4 +1,4 @@
-import * as number from './number';
+import * as number from "./number";
 
 /**
  * 時間を扱う。
@@ -258,13 +258,13 @@ export class DateTime {
 		}
 
 		switch (format) {
-			case 'U':
+			case "U":
 				return this._timestamp.toUTCString();
 
-			case 'S':
+			case "S":
 				return this._timestamp.toString();
 
-			case 'L':
+			case "L":
 				return this._timestamp.toLocaleString();
 
 			default:
@@ -275,33 +275,32 @@ export class DateTime {
 			//['y', (this.year.toString())],
 			//['yy', number.padding(this.year - 2000, 2, '0')],
 			//['yyy', number.padding(this.year, 3, '0')],
-			['yyyy', number.padding(this.year, 4, '0')],
-			['yyyyy', number.padding(this.year, 5, '0')],
+			["yyyy", number.padding(this.year, 4, "0")],
+			["yyyyy", number.padding(this.year, 5, "0")],
 
+			["M", this.month.toString()],
+			["MM", number.padding(this.month, 2, "0")],
 
-			['M', this.month.toString()],
-			['MM', number.padding(this.month, 2, '0')],
+			["d", this.day.toString()],
+			["dd", number.padding(this.day, 2, "0")],
 
-			['d', this.day.toString()],
-			['dd', number.padding(this.day, 2, '0')],
+			["H", this.hour.toString()],
+			["HH", number.padding(this.hour, 2, "0")],
 
-			['H', this.hour.toString()],
-			['HH', number.padding(this.hour, 2, '0')],
+			["m", this.minute.toString()],
+			["mm", number.padding(this.minute, 2, "0")],
 
-			['m', this.minute.toString()],
-			['mm', number.padding(this.minute, 2, '0')],
-
-			['s', this.second.toString()],
-			['ss', number.padding(this.second, 2, '0')],
+			["s", this.second.toString()],
+			["ss", number.padding(this.second, 2, "0")],
 		]);
 
 		const pattern = Array.from(map.keys())
 			.sort((a, b) => b.length - a.length)
-			.join('|')
+			.join("|")
 			;
 
 		return format.replace(
-			new RegExp('(' + pattern + ')', 'g'),
+			new RegExp("(" + pattern + ")", "g"),
 			m => map.get(m) ?? m
 		);
 	}

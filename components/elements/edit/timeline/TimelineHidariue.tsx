@@ -1,6 +1,7 @@
-import { EditContext } from '@/models/data/context/EditContext';
-import { NextPage } from 'next';
-import { useContext } from 'react';
+import { NextPage } from "next";
+import { useContext } from "react";
+
+import { EditContext } from "@/models/data/context/EditContext";
 
 const Component: NextPage = () => {
 	const editContext = useContext(EditContext);

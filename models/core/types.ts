@@ -22,7 +22,7 @@ export type Strong<T, U = string> = T & { readonly [_Strong]: U };
  * @returns
  */
 export function isUndefined(arg: unknown): arg is undefined {
-	return typeof arg === 'undefined';
+	return typeof arg === "undefined";
 }
 
 /**
@@ -42,14 +42,13 @@ export function isNullish(arg: unknown): arg is null | undefined {
 	return isUndefined(arg) || isNull(arg);
 }
 
-
 /**
  * 型が `Symbol` か。
  * @param arg
  * @returns
  */
 export function isSymbol(arg: unknown): arg is Symbol {
-	return typeof arg === 'symbol';
+	return typeof arg === "symbol";
 }
 
 /**
@@ -58,7 +57,7 @@ export function isSymbol(arg: unknown): arg is Symbol {
  * @returns
  */
 export function isString(arg: unknown): arg is string {
-	return typeof arg === 'string';
+	return typeof arg === "string";
 }
 
 /**
@@ -67,7 +66,7 @@ export function isString(arg: unknown): arg is string {
  * @returns
  */
 export function isNumber(arg: unknown): arg is number {
-	return typeof arg === 'number';
+	return typeof arg === "number";
 }
 
 /**
@@ -76,7 +75,7 @@ export function isNumber(arg: unknown): arg is number {
  * @returns
  */
 export function isBigInt(arg: unknown): arg is bigint {
-	return typeof arg === 'bigint';
+	return typeof arg === "bigint";
 }
 
 /**
@@ -85,7 +84,7 @@ export function isBigInt(arg: unknown): arg is bigint {
  * @returns
  */
 export function isBoolean(arg: unknown): arg is boolean {
-	return typeof arg === 'boolean';
+	return typeof arg === "boolean";
 }
 
 /**
@@ -103,7 +102,7 @@ export function isArray<T extends unknown>(arg: unknown): arg is Array<T> {
  * @returns
  */
 export function isObject(arg: unknown): arg is Object {
-	return arg !== null && typeof arg === 'object' && !Array.isArray(arg);
+	return arg !== null && typeof arg === "object" && !Array.isArray(arg);
 }
 
 /**
@@ -112,7 +111,7 @@ export function isObject(arg: unknown): arg is Object {
  * @returns
  */
 export function isFunction<T extends Function>(arg: unknown): arg is T {
-	return typeof arg === 'function';
+	return typeof arg === "function";
 }
 
 /**
@@ -122,7 +121,7 @@ export function isFunction<T extends Function>(arg: unknown): arg is T {
  * @returns
  */
 export function hasProperty(arg: unknown, key: PropertyKey): arg is Record<PropertyKey, unknown> {
-	return arg !== undefined && arg !== null && typeof arg === 'object' && key in arg;
+	return arg !== undefined && arg !== null && typeof arg === "object" && key in arg;
 }
 
 /**
@@ -363,7 +362,7 @@ export function instanceOf<T extends object>(arg: unknown, type: Constructor<T>)
  * @returns
  */
 export function isEqual<T extends object>(arg: unknown, type: Constructor<T>): arg is T {
-	if (!hasProperty(arg, 'constructor')) {
+	if (!hasProperty(arg, "constructor")) {
 		return false;
 	}
 
@@ -388,19 +387,19 @@ export function getProperties<T extends object>(obj: T): Set<keyof T> {
 
 		const currentPropertyNames = Object.getOwnPropertyNames(prototype) as Array<keyof T>;
 		const targets = currentPropertyNames.filter(i => {
-			const descriptor = Object.getOwnPropertyDescriptor(prototype, i);;
-			return i !== '__proto__' && descriptor?.get instanceof Function;
+			const descriptor = Object.getOwnPropertyDescriptor(prototype, i);
+			return i !== "__proto__" && descriptor?.get instanceof Function;
 		});
 
 		for (const target of targets) {
-			result.add(target)
+			result.add(target);
 		}
 
 		current = prototype;
 	}
 
 	for (const target in obj) {
-		result.add(target)
+		result.add(target);
 	}
 
 	return result;
@@ -422,7 +421,7 @@ export function flatClone<TResult extends { [K in keyof TResult]: TResult[K] }, 
 export function nameof(name: Function): string;
 export function nameof<T extends object>(name: Extract<keyof T, string>): string;
 export function nameof<T>(name: Extract<keyof T, string> | Function): string {
-	if (typeof name === 'function') {
+	if (typeof name === "function") {
 		return name.name;
 	}
 
@@ -431,22 +430,21 @@ export function nameof<T>(name: Extract<keyof T, string> | Function): string {
 
 export function toString(input: any): string {
 	switch (typeof input) {
-		case 'object':
+		case "object":
 			if (input === null) {
-				return 'null';
-			} else {
-				break;
+				return "null";
 			}
+				break;
 
-		case 'undefined':
-			return 'undefined';
+		case "undefined":
+			return "undefined";
 
-		case 'boolean':
-			return input ? 'true' : 'false';
+		case "boolean":
+			return input ? "true" : "false";
 
 		default:
 			break;
 	}
 
-	return input + '';
+	return input + "";
 }

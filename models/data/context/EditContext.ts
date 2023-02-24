@@ -1,5 +1,6 @@
-import { createContext } from 'react';
-import { EditData } from '../EditData';
+import { createContext } from "react";
+
+import { EditData } from "../EditData";
 
 export interface EditContext {
 	data: EditData;
@@ -31,12 +32,12 @@ export class EditContextImpl {
 
 	public design = {
 		cell: {
-			maxWidth: '20px',
-			minWidth: '20px',
-			maxHeight: '20px',
-			minHeight: '20px',
+			maxWidth: "20px",
+			minWidth: "20px",
+			maxHeight: "20px",
+			minHeight: "20px",
 		}
-	}
+	};
 
 	public debug = 0;
 

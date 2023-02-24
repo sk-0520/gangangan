@@ -1,6 +1,6 @@
 import { Color } from "./Color";
-import { WeekDay } from "./WeekDay";
 import { HolidayKind } from "./Holiday";
+import { WeekDay } from "./WeekDay";
 
 export interface Theme {
 	holiday: {

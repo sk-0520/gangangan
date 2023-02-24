@@ -1,7 +1,8 @@
-import { NextPage } from 'next';
-import { useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import { EditContext } from '@/models/data/context/EditContext';
+import { NextPage } from "next";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+
+import { EditContext } from "@/models/data/context/EditContext";
 
 const Component: NextPage = () => {
 	const editContext = useContext(EditContext);
@@ -11,8 +12,8 @@ const Component: NextPage = () => {
 		const json = JSON.stringify(editContext.data.setting, undefined, 2);
 
 		// download
-		const blob = new Blob([json], { type: 'application/json' });
-		const link = document.createElement('a');
+		const blob = new Blob([json], { type: "application/json" });
+		const link = document.createElement("a");
 		link.href = window.URL.createObjectURL(blob);
 		link.download = editContext.data.fileName;
 		link.click();
@@ -27,7 +28,7 @@ const Component: NextPage = () => {
 						<dl className="inputs">
 							<dt>ファイル名</dt>
 							<dd>
-								<input type="text" {...register('data.fileName', {
+								<input type="text" {...register("data.fileName", {
 									value: editContext.data.fileName,
 									onChange: ev => editContext.data.fileName = ev.target.value
 								})} />
@@ -36,7 +37,7 @@ const Component: NextPage = () => {
 							<dt>定期的にファイルをDLする</dt>
 							<dd>
 								<label>
-									<input type='checkbox' {...register('autoSave.isEnabled', {
+									<input type='checkbox' {...register("autoSave.isEnabled", {
 										value: editContext.autoSave.isEnabled,
 										onChange: ev => editContext.autoSave.isEnabled = ev.target.checked
 									})} />
@@ -45,7 +46,7 @@ const Component: NextPage = () => {
 							</dd>
 							<dd>
 								<label>
-									<input type='number' {...register('autoSave.minutes', {
+									<input type='number' {...register("autoSave.minutes", {
 										value: editContext.autoSave.minutes,
 										onChange: ev => editContext.autoSave.minutes = ev.target.value
 									})} />

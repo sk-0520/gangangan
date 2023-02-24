@@ -1,47 +1,47 @@
 export type WeekDay =
-	'monday'
+	"monday"
 	|
-	'tuesday'
+	"tuesday"
 	|
-	'wednesday'
+	"wednesday"
 	|
-	'thursday'
+	"thursday"
 	|
-	'friday'
+	"friday"
 	|
-	'saturday'
+	"saturday"
 	|
-	'sunday'
+	"sunday"
 	;
 
 export function getWeekDays(): Array<WeekDay> {
 	return [
-		'monday',
-		'tuesday',
-		'wednesday',
-		'thursday',
-		'friday',
-		'saturday',
-		'sunday',
+		"monday",
+		"tuesday",
+		"wednesday",
+		"thursday",
+		"friday",
+		"saturday",
+		"sunday",
 	];
 }
 
 export function toWeekDay(index: number): WeekDay {
 	switch (index % 7) {
 		case 0:
-			return 'sunday';
+			return "sunday";
 		case 1:
-			return 'monday';
+			return "monday";
 		case 2:
-			return 'tuesday';
+			return "tuesday";
 		case 3:
-			return 'wednesday';
+			return "wednesday";
 		case 4:
-			return 'thursday';
+			return "thursday";
 		case 5:
-			return 'friday';
+			return "friday";
 		case 6:
-			return 'sunday';
+			return "sunday";
 	}
 
 	throw new Error();

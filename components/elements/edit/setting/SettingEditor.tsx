@@ -1,28 +1,30 @@
-import { NextPage } from 'next';
-import { FormEvent, useContext } from 'react';
-import { v4 } from 'uuid';
-import CalendarHolidaySettingEditor from './Calendar/CalendarHolidaySettingEditor';
-import CalendarRangeSettingEditor from './Calendar/CalendarRangeSettingEditor';
-import CalendarWeekSettingEditor from './Calendar/CalendarWeekSettingEditor';
-import GroupsEditor from './Group/GroupsEditor';
-import ThemeCalendarSettingEditor from './Theme/ThemeCalendarSettingEditor';
-import ThemeCompletedSettingEditor from './Theme/ThemeCompletedSettingEditor';
-import ThemeGroupSettingEditor from './Theme/ThemeGroupSettingEditor';
-import * as Storage from '@/models/Storage';
-import * as string from '@/models/core/string';
-import { EditContext } from '@/models/data/context/EditContext';
-import { MemberSetting, SettingContext } from '@/models/data/context/SettingContext';
-import { Color } from '@/models/data/setting/Color';
-import { HolidayKind, HolidayEvent } from '@/models/data/setting/Holiday';
-import * as ISO8601 from '@/models/data/setting/ISO8601';
-import { Setting } from '@/models/data/setting/Setting';
-import { WeekDay } from '@/models/data/setting/WeekDay';
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import { NextPage } from "next";
+import { FormEvent, useContext } from "react";
+import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
+import { v4 } from "uuid";
 
-const NewLine = '\r\n';
-const ThemeHolidayRegularColor: Color = '#0f0';
-const ThemeHolidayEventHolidayColor: Color = '#0f0';
-const ThemeHolidayEventSpecialColor: Color = '#0f0';
+import * as Storage from "@/models/Storage";
+import * as string from "@/models/core/string";
+import { EditContext } from "@/models/data/context/EditContext";
+import { MemberSetting, SettingContext } from "@/models/data/context/SettingContext";
+import { Color } from "@/models/data/setting/Color";
+import { HolidayKind, HolidayEvent } from "@/models/data/setting/Holiday";
+import * as ISO8601 from "@/models/data/setting/ISO8601";
+import { Setting } from "@/models/data/setting/Setting";
+import { WeekDay } from "@/models/data/setting/WeekDay";
+
+import CalendarHolidaySettingEditor from "./Calendar/CalendarHolidaySettingEditor";
+import CalendarRangeSettingEditor from "./Calendar/CalendarRangeSettingEditor";
+import CalendarWeekSettingEditor from "./Calendar/CalendarWeekSettingEditor";
+import GroupsEditor from "./Group/GroupsEditor";
+import ThemeCalendarSettingEditor from "./Theme/ThemeCalendarSettingEditor";
+import ThemeCompletedSettingEditor from "./Theme/ThemeCompletedSettingEditor";
+import ThemeGroupSettingEditor from "./Theme/ThemeGroupSettingEditor";
+
+const NewLine = "\r\n";
+const ThemeHolidayRegularColor: Color = "#0f0";
+const ThemeHolidayEventHolidayColor: Color = "#0f0";
+const ThemeHolidayEventSpecialColor: Color = "#0f0";
 
 const Component: NextPage = () => {
 	const editContext = useContext(EditContext);
@@ -36,7 +38,7 @@ const Component: NextPage = () => {
 		console.debug(setting);
 		Storage.saveEditData(editContext.data);
 
-		window.location.reload()
+		window.location.reload();
 	}
 
 	return (
@@ -107,7 +109,7 @@ function toCalendarHolidayEventContext(kind: HolidayKind, items: { [key: ISO8601
 		.filter(([k, v]) => v.kind === kind)
 		.map(([k, v]) => ({ date: new Date(k), display: v.display }))
 		.sort((a, b) => a.date.getTime() - b.date.getTime())
-		.map(a => `${a.date.toISOString().split('T')[0]}\t${a.display}`)
+		.map(a => `${a.date.toISOString().split("T")[0]}\t${a.display}`)
 		.join(NewLine)
 		;
 
@@ -132,17 +134,17 @@ function toContext(setting: Setting): SettingContext {
 			},
 			holiday: {
 				regulars: {
-					monday: setting.calendar.holiday.regulars.includes('monday'),
-					tuesday: setting.calendar.holiday.regulars.includes('tuesday'),
-					wednesday: setting.calendar.holiday.regulars.includes('wednesday'),
-					thursday: setting.calendar.holiday.regulars.includes('thursday'),
-					friday: setting.calendar.holiday.regulars.includes('friday'),
-					saturday: setting.calendar.holiday.regulars.includes('saturday'),
-					sunday: setting.calendar.holiday.regulars.includes('sunday'),
+					monday: setting.calendar.holiday.regulars.includes("monday"),
+					tuesday: setting.calendar.holiday.regulars.includes("tuesday"),
+					wednesday: setting.calendar.holiday.regulars.includes("wednesday"),
+					thursday: setting.calendar.holiday.regulars.includes("thursday"),
+					friday: setting.calendar.holiday.regulars.includes("friday"),
+					saturday: setting.calendar.holiday.regulars.includes("saturday"),
+					sunday: setting.calendar.holiday.regulars.includes("sunday"),
 				},
 				events: {
-					holidays: toCalendarHolidayEventContext('holiday', setting.calendar.holiday.events),
-					specials: toCalendarHolidayEventContext('special', setting.calendar.holiday.events),
+					holidays: toCalendarHolidayEventContext("holiday", setting.calendar.holiday.events),
+					specials: toCalendarHolidayEventContext("special", setting.calendar.holiday.events),
 				}
 			},
 		},
@@ -176,14 +178,14 @@ function fromCalendarHolidayEventsContext(kind: HolidayKind, context: string): {
 
 	const items = string.splitLines(context)
 		.filter(a => a && a.trim())
-		.map(a => a.split('\t', 2))
+		.map(a => a.split("\t", 2))
 		.map(a => ({ date: a[0], display: a[1] }))
 		.map(a => ({ date: new Date(a.date), display: a.display }))
 		.filter(a => !isNaN(a.date.getTime()))
 		;
 
 	for (const item of items) {
-		result[item.date.toISOString().split('T')[0]] = {
+		result[item.date.toISOString().split("T")[0]] = {
 			display: item.display,
 			kind: kind
 		};
@@ -202,17 +204,17 @@ function fromContext(source: Readonly<Setting>, context: SettingContext): Settin
 			},
 			holiday: {
 				regulars: new Array<{ week: WeekDay, value: boolean }>().concat([
-					{ week: 'monday', value: context.calendar.holiday.regulars.monday },
-					{ week: 'tuesday', value: context.calendar.holiday.regulars.tuesday },
-					{ week: 'wednesday', value: context.calendar.holiday.regulars.wednesday },
-					{ week: 'thursday', value: context.calendar.holiday.regulars.thursday },
-					{ week: 'friday', value: context.calendar.holiday.regulars.friday },
-					{ week: 'saturday', value: context.calendar.holiday.regulars.saturday },
-					{ week: 'sunday', value: context.calendar.holiday.regulars.sunday },
+					{ week: "monday", value: context.calendar.holiday.regulars.monday },
+					{ week: "tuesday", value: context.calendar.holiday.regulars.tuesday },
+					{ week: "wednesday", value: context.calendar.holiday.regulars.wednesday },
+					{ week: "thursday", value: context.calendar.holiday.regulars.thursday },
+					{ week: "friday", value: context.calendar.holiday.regulars.friday },
+					{ week: "saturday", value: context.calendar.holiday.regulars.saturday },
+					{ week: "sunday", value: context.calendar.holiday.regulars.sunday },
 				]).filter(a => a.value).map(a => a.week),
 				events: {
-					...fromCalendarHolidayEventsContext('holiday', context.calendar.holiday.events.holidays),
-					...fromCalendarHolidayEventsContext('special', context.calendar.holiday.events.specials),
+					...fromCalendarHolidayEventsContext("holiday", context.calendar.holiday.events.holidays),
+					...fromCalendarHolidayEventsContext("special", context.calendar.holiday.events.specials),
 				}
 			}
 		},

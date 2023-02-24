@@ -1,9 +1,10 @@
-import { NextPage } from 'next';
-import { useContext, useState } from 'react';
-import { SettingContext } from '@/models/data/context/SettingContext';
-import { Color } from '@/models/data/setting/Color';
-import { getWeekDays, WeekDay } from '@/models/data/setting/WeekDay';
-import { useLocale } from '@/models/locales/locale';
+import { NextPage } from "next";
+import { useContext, useState } from "react";
+
+import { SettingContext } from "@/models/data/context/SettingContext";
+import { Color } from "@/models/data/setting/Color";
+import { getWeekDays, WeekDay } from "@/models/data/setting/WeekDay";
+import { useLocale } from "@/models/locales/locale";
 
 const Component: NextPage = () => {
 	const locale = useLocale();
@@ -19,7 +20,7 @@ const Component: NextPage = () => {
 		setHolidayRegulars(holidayRegulars);
 	}
 
-	function handleSetHolidayEventColor(event: 'holiday' | 'special', color: Color) {
+	function handleSetHolidayEventColor(event: "holiday" | "special", color: Color) {
 		holidayEvents[event] = color;
 		setHolidayEvents(holidayEvents);
 	}
@@ -53,7 +54,7 @@ const Component: NextPage = () => {
 							<td>
 								<input type='color'
 									defaultValue={holidayEvents.holiday}
-									onChange={ev => handleSetHolidayEventColor('holiday', ev.target.value)}
+									onChange={ev => handleSetHolidayEventColor("holiday", ev.target.value)}
 								/>
 							</td>
 						</tr>
@@ -62,7 +63,7 @@ const Component: NextPage = () => {
 							<td>
 								<input type='color'
 									defaultValue={holidayEvents.special}
-									onChange={ev => handleSetHolidayEventColor('special', ev.target.value)}
+									onChange={ev => handleSetHolidayEventColor("special", ev.target.value)}
 								/>
 							</td>
 						</tr>

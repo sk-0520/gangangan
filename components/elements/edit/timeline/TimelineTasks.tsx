@@ -1,10 +1,12 @@
-import { EditContext } from '@/models/data/context/EditContext';
-import { useLocale } from '@/models/locales/locale';
-import { NextPage } from 'next';
-import { useContext, useState } from 'react';
-import TimelineTaskEditor from './TimelineTaskEditor';
+import { NextPage } from "next";
+import { useContext, useState } from "react";
+import { v4 } from "uuid";
+
+import { EditContext } from "@/models/data/context/EditContext";
+import { useLocale } from "@/models/locales/locale";
+
+import TimelineTaskEditor from "./TimelineTaskEditor";
 import * as Timeline from "../../../../models/data/setting/Timeline";
-import { v4 } from 'uuid';
 
 interface Props {
 }
@@ -16,7 +18,7 @@ const Component: NextPage<Props> = (props: Props) => {
 	const heightStyle = {
 		maxHeight: editContext.design.cell.maxHeight,
 		minHeight: editContext.design.cell.minHeight,
-	}
+	};
 
 	//const [newTimeline, setNewTimeline] = useState<Timeline.TaskTimeline>();
 	const newTimeline = createEmptyTimeline();
@@ -53,16 +55,16 @@ export default Component;
 
 function createEmptyTimeline(): Timeline.TaskTimeline {
 	const result: Timeline.TaskTimeline = {
-		id: '',
-		kind: 'task',
-		subject: 'NEW',
-		comment: '',
+		id: "",
+		kind: "task",
+		subject: "NEW",
+		comment: "",
 		group: {},
 		item: {
 			prev: {
 				items: [],
 			},
-			range: '1.00:00:00.0',
+			range: "1.00:00:00.0",
 			works: [],
 		}
 	};

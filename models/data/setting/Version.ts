@@ -1,4 +1,4 @@
-import * as ISO8601 from './ISO8601';
+import * as ISO8601 from "./ISO8601";
 
 export type VersionId = string;
 

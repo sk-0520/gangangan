@@ -1,4 +1,4 @@
-import * as throws from './throws';
+import * as throws from "./throws";
 
 /**
  * 数値埋め処理。
@@ -12,10 +12,10 @@ import * as throws from './throws';
  */
 export function padding(input: number, width: number, c: string): string {
 	if (input < 0) {
-		throw new Error('input is negative');
+		throw new Error("input is negative");
 	}
 	if (c.length != 1) {
-		throw new Error('c.length is ' + c.length);
+		throw new Error("c.length is " + c.length);
 	}
 
 	const numberValue = input.toString();
@@ -56,7 +56,7 @@ export function parseInt(input: string, radix?: number | undefined) {
  */
 export function parseIntOr(input: string, fallback: number, radix?: number | undefined) {
 	if (!Number.isInteger(fallback)) {
-		throw new throws.ArgumentError('fallback: Number.isInteger');
+		throw new throws.ArgumentError("fallback: Number.isInteger");
 	}
 
 	const value = globalThis.parseInt(input, radix);

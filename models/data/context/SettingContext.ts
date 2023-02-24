@@ -1,8 +1,9 @@
-import { createContext } from 'react';
-import { Color } from '../setting/Color';
-import * as ISO8601 from '../setting/ISO8601';
-import { WeekDay } from '../setting/WeekDay';
-import * as Member from '../setting/Member';
+import { createContext } from "react";
+
+import { Color } from "../setting/Color";
+import * as ISO8601 from "../setting/ISO8601";
+import * as Member from "../setting/Member";
+import { WeekDay } from "../setting/WeekDay";
 
 export type UUID = string;
 
@@ -17,7 +18,7 @@ export interface GroupSetting {
 	key: UUID;
 	name: string;
 	members: Array<MemberSetting>;
-};
+}
 
 export interface CalendarSetting {
 	range: {

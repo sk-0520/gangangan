@@ -1,11 +1,12 @@
-import { NextPage } from 'next';
-import { NextRouter, useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
-import Layout from '@/components/layout/Layout';
-import * as Goto from '@/models/Goto';
-import { EditData } from '@/models/data/EditData';
-import * as ISO8601 from '@/models/data/setting/ISO8601';
-import * as Setting from '@/models/data/setting/Setting';
+import { NextPage } from "next";
+import { NextRouter, useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+
+import Layout from "@/components/layout/Layout";
+import * as Goto from "@/models/Goto";
+import { EditData } from "@/models/data/EditData";
+import * as ISO8601 from "@/models/data/setting/ISO8601";
+import * as Setting from "@/models/data/setting/Setting";
 
 interface NewInput {
 	title: string;
@@ -28,10 +29,10 @@ const New: NextPage = () => {
 					<dd>
 						<input
 							type='text'
-							{...register('title', {
+							{...register("title", {
 								required: {
 									value: true,
-									message: '必須'
+									message: "必須"
 								}
 							})}
 						/>
@@ -43,10 +44,10 @@ const New: NextPage = () => {
 							開始
 							<input
 								type='date'
-								{...register('dateFrom', {
+								{...register("dateFrom", {
 									required: {
 										value: true,
-										message: '必須'
+										message: "必須"
 									}
 								})}
 							/>
@@ -55,10 +56,10 @@ const New: NextPage = () => {
 						<label>
 							<input
 								type='date'
-								{...register('dateTo', {
+								{...register("dateTo", {
 									required: {
 										value: true,
-										message: '必須'
+										message: "必須"
 									}
 								})}
 							/>
@@ -78,14 +79,14 @@ export default New;
 function onSubmit(data: NewInput, router: NextRouter) {
 	console.debug(data);
 
-	const fileName = 'new.json';
+	const fileName = "new.json";
 	const setting: Setting.Setting = {
 		name: data.title,
 		calendar: {
 			holiday: {
 				regulars: [
-					'saturday',
-					'sunday'
+					"saturday",
+					"sunday"
 				],
 				events: {}
 			},
@@ -97,20 +98,20 @@ function onSubmit(data: NewInput, router: NextRouter) {
 		theme: {
 			holiday: {
 				regulars: {
-					'saturday': '#0000ff',
-					'sunday': '#ff0000',
+					"saturday": "#0000ff",
+					"sunday": "#ff0000",
 				},
 				events: {
-					'holiday': '#f00',
-					'special': '#f0f',
+					"holiday": "#f00",
+					"special": "#f0f",
 				}
 			},
 			groups: [
-				'#00ff00',
-				'#ffff00',
-				'#00ffff',
+				"#00ff00",
+				"#ffff00",
+				"#00ffff",
 			],
-			completed: '#000000',
+			completed: "#000000",
 		},
 		groups: [],
 		timelines: [],

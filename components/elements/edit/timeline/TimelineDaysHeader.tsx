@@ -1,8 +1,9 @@
-import { EditContext } from '@/models/data/context/EditContext';
-import { getWeekDays, toWeekDay } from '@/models/data/setting/WeekDay';
-import { useLocale } from '@/models/locales/locale';
-import { NextPage } from 'next';
-import { useContext, useState } from 'react';
+import { NextPage } from "next";
+import { useContext, useState } from "react";
+
+import { EditContext } from "@/models/data/context/EditContext";
+import { getWeekDays, toWeekDay } from "@/models/data/setting/WeekDay";
+import { useLocale } from "@/models/locales/locale";
 
 const Component: NextPage = () => {
 	const locale = useLocale();
@@ -13,11 +14,11 @@ const Component: NextPage = () => {
 		to: new Date(editContext.data.setting.calendar.range.to),
 	};
 
-	var diff = range.to.getTime() - range.from.getTime();
+	let diff = range.to.getTime() - range.from.getTime();
 	const days = diff / (24 * 60 * 60 * 1000);
 
 	const dates = Array.from(Array(days), (_, index) => {
-		const date = new Date(range.from.getTime())
+		const date = new Date(range.from.getTime());
 		date.setDate(date.getDate() + index);
 		return date;
 	});
@@ -42,8 +43,7 @@ const Component: NextPage = () => {
 			return year;
 		}
 		return a.month - b.month;
-	})
-
+	});
 
 	const cellStyle = editContext.design.cell;
 
@@ -58,7 +58,7 @@ const Component: NextPage = () => {
 								const display = `${a.year}/${a.month + 1}`;
 
 								return (
-									<td className={'cell'} colSpan={a.length} style={cellStyle}>{display}</td>
+									<td className={"cell"} colSpan={a.length} style={cellStyle}>{display}</td>
 								);
 							})}
 						</tr>

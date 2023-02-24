@@ -1,8 +1,9 @@
-import { NextPage } from 'next';
-import TimelineHidariue from './TimelineHidariue';
-import TimelineDaysHeader from './TimelineDaysHeader';
-import TimelineTasks from './TimelineTasks';
-import TimelineViewer from './TimelineViewer';
+import { NextPage } from "next";
+
+import TimelineDaysHeader from "./TimelineDaysHeader";
+import TimelineHidariue from "./TimelineHidariue";
+import TimelineTasks from "./TimelineTasks";
+import TimelineViewer from "./TimelineViewer";
 
 const Component: NextPage = () => {
 	return (

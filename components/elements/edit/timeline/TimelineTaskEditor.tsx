@@ -1,11 +1,13 @@
-import { EditContext } from '@/models/data/context/EditContext';
-import { useLocale } from '@/models/locales/locale';
-import { NextPage } from 'next';
-import { useContext, useState } from 'react';
+import { NextPage } from "next";
+import { useContext, useState } from "react";
+
+import { EditContext } from "@/models/data/context/EditContext";
+import { useLocale } from "@/models/locales/locale";
+
 import * as Timeline from "../../../../models/data/setting/Timeline";
 
 interface Props {
-	mode: 'edit' | 'new';
+	mode: "edit" | "new";
 	timeline: Timeline.TaskTimeline;
 }
 
@@ -14,7 +16,6 @@ const Component: NextPage<Props> = (props: Props) => {
 	const editContext = useContext(EditContext);
 
 	const [subject, setSubject] = useState(props.timeline.subject);
-
 
 	function handleSubject(s: string) {
 		setSubject(s);
@@ -25,7 +26,7 @@ const Component: NextPage<Props> = (props: Props) => {
 		<div className='task'>
 			<div className='timeline-header'>
 				<div className='timeline-id'>
-					{props.mode === 'edit'
+					{props.mode === "edit"
 						? (
 							<>{props.timeline.id}</>
 						) : (
