@@ -4,8 +4,22 @@
 		"import/order": [
 			"error",
 			{
+				"groups": [
+					"builtin",
+					"external",
+					"internal",
+					[
+						"parent",
+						"sibling"
+					],
+					"object",
+					"type",
+					"index"
+				],
+				"newlines-between": "always",
 				"alphabetize": {
-					"order": "asc"
+					"order": "asc",
+					"caseInsensitive": false
 				}
 			}
 		],
@@ -32,7 +46,7 @@
 				"max": 1
 			}
 		],
-		"no-dupe-class-members": "error",
+		"no-dupe-class-members": "off",
 		"no-var": "error",
 		"no-label-var": "error",
 		"prefer-spread": "error",
