@@ -35,7 +35,7 @@ const Component: NextPage<Props> = (props: Props) => {
 						return (
 							<>
 								<li key={a.id} style={heightStyle}>
-									<TimelineTaskEditor current={a} />
+									<TimelineTaskEditor group={null} current={a} />
 								</li>
 							</>
 						);
@@ -59,7 +59,9 @@ function createEmptyTimeline(): Timeline.TaskTimeline {
 		subject: "NEW",
 		comment: "",
 		type: "group",
-		group: {},
+		group: {
+			parentGroupId: "",
+		},
 		item: {
 			prev: {
 				items: [],

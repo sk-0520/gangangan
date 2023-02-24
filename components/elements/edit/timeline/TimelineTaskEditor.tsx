@@ -8,7 +8,7 @@ import * as Timeline from "../../../../models/data/setting/Timeline";
 import { TaskTimelineType } from "../../../../models/data/setting/Timeline";
 
 interface Props {
-	parent: Timeline.TaskTimeline;
+	group: Timeline.TaskTimeline | null;
 	current: Timeline.TaskTimeline;
 }
 
