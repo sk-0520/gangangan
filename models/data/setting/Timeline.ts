@@ -53,7 +53,9 @@ export type TaskTimelineType =
 	"item"
 	;
 
-export interface TaskTimelineGroup { }
+export interface TaskTimelineGroup {
+	parentGroupId: TaskTimelineId;
+}
 
 type TaskTimelineItemWorkState =
 	"enabled"

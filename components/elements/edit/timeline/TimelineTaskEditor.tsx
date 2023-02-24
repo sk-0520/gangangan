@@ -8,29 +8,30 @@ import * as Timeline from "../../../../models/data/setting/Timeline";
 import { TaskTimelineType } from "../../../../models/data/setting/Timeline";
 
 interface Props {
-	timeline: Timeline.TaskTimeline;
+	parent: Timeline.TaskTimeline;
+	current: Timeline.TaskTimeline;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
 	const locale = useLocale();
 	const editContext = useContext(EditContext);
 
-	const [subject, setSubject] = useState(props.timeline.subject);
-	const [type, setType] = useState(props.timeline.type);
-	const [range, setRange] = useState(props.timeline.item.range);
+	const [subject, setSubject] = useState(props.current.subject);
+	const [type, setType] = useState(props.current.type);
+	const [range, setRange] = useState(props.current.item.range);
 	//const [range, setRange] = useState(props.timeline.item.);
 	const [progress, setProgress] = useState(0);
 
 	function handleChangeSubject(s: string) {
 		setSubject(s);
-		props.timeline.subject = s;
+		props.current.subject = s;
 	}
 
 	function handleChangeType(s: string) {
 		if (["group", "item"].includes(s)) {
 			const t = s as TaskTimelineType;
 			setType(t);
-			props.timeline.type = t;
+			props.current.type = t;
 		}
 	}
 
@@ -41,7 +42,7 @@ const Component: NextPage<Props> = (props: Props) => {
 	function handleChangeProgress(n: number) {
 		setProgress(n);
 		if (type === "item") {
-			props.timeline.item.works.push({
+			props.current.item.works.push({
 				member: "",
 				progress: n,
 				state: "enabled",
@@ -53,7 +54,7 @@ const Component: NextPage<Props> = (props: Props) => {
 		<div className='task'>
 			<div className='timeline-header'>
 				<div className='timeline-id'>
-					{props.timeline.id}
+					{props.current.id}
 				</div>
 				<div className='timeline-task'>
 					<input

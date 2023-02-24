@@ -35,7 +35,7 @@ const Component: NextPage<Props> = (props: Props) => {
 						return (
 							<>
 								<li key={a.id} style={heightStyle}>
-									<TimelineTaskEditor timeline={a} />
+									<TimelineTaskEditor current={a} />
 								</li>
 							</>
 						);
