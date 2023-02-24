@@ -22,7 +22,7 @@ const locale: Locale = {
 				"saturday": "土",
 				"sunday": "日",
 			},
-		 },
+		},
 	}
 };
 
