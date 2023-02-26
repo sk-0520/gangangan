@@ -58,22 +58,22 @@ const Component: NextPage = () => {
 								const display = `${a.year}/${a.month + 1}`;
 
 								return (
-									<td className={"cell"} colSpan={a.length} style={cellStyle}>{display}</td>
+									<td key={display} className={"cell"} colSpan={a.length} style={cellStyle}>{display}</td>
 								);
 							})}
 						</tr>
 					</thead>
 					<tbody>
 						<tr className='day'>
-							{dates.map(a => <td className='cell' style={cellStyle}>{a.getDate()}</td>)}
+							{dates.map(a => <td key={a.toISOString()} className='cell' style={cellStyle}>{a.getDate()}</td>)}
 						</tr>
 						<tr className='week'>
-							{dates.map(a => <td className='cell' style={cellStyle}>{locale.calendar.week.short[toWeekDay(a.getDay())]}</td>)}
+							{dates.map(a => <td key={a.toISOString()} className='cell' style={cellStyle}>{locale.calendar.week.short[toWeekDay(a.getDay())]}</td>)}
 						</tr>
 					</tbody>
 					<tbody>
 						<tr className='pin'>
-							{dates.map(a => <td className='cell' style={cellStyle}>@</td>)}
+							{dates.map(a => <td key={a.toISOString()} className='cell' style={cellStyle}>@</td>)}
 						</tr>
 					</tbody>
 				</tbody>

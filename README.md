@@ -64,38 +64,19 @@
 		],
 		"end": "RGB",
 	},
-	"tasks": [
-		/*
-		{
-			"kind": "marker",
-			"scope": "global|local|slim",
-			"color": "RGB",
-			"subject": "マーカー名",
-			// 対象日時
-			"target": "ISO8601",
-			"range": "ISO8601時刻",
-			"comment": ""
-		},
-		{
-			"kind": "pin",
-			"scope": "pin|line",
-			"color": "RGB",
-			"subject": "ピン件名",
-			// 対象日時
-			"target": "ISO8601",
-			"comment": ""
-		},
-		*/
+	"timelines": [
 		{
 			"kind": "group",
-			"id": "<TASK-TIMELINE-GROUP-ID>",
+			"id": "<TIMELINE-ID>",
 			"subject": "タイムライン名",
-			"type": "group|item",
-			"parentGroup": "<GROUP-TIMELINE-ID>" | null,
+			"children": [
+				"<TIMELINE-TASK> | <TIMELINE-GROUP>"
+			],
+			"comment": "",
 		}
 		{
-			"kind": "item",
-			"id": "<TASK-TIMELINE-ITEM-ID>",
+			"kind": "task",
+			"id": "<TIMELINE-TASK-ID>",
 			"subject": "タイムライン名",
 			// 固定と先行が設定されている場合最大を使用する
 			// 固定
@@ -105,7 +86,7 @@
 			// 先行 複数指定は全先行が終了する必要あり
 			"prev": {
 				"items": [
-					"<TASK-TIMELINE-ID>",
+					"<TIMELINE-ID>",
 				]
 			},
 			"range": "ISO8601時刻",

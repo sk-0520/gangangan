@@ -5,11 +5,10 @@ import { EditContext } from "@/models/data/context/EditContext";
 import { useLocale } from "@/models/locales/locale";
 
 import * as Timeline from "../../../../models/data/setting/Timeline";
-import { TaskTimelineType } from "../../../../models/data/setting/Timeline";
 
 interface Props {
 	group: Timeline.TaskTimeline | null;
-	current: Timeline.TaskTimeline;
+	current: Timeline.GroupTimeline |Timeline.TaskTimeline;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -17,37 +16,14 @@ const Component: NextPage<Props> = (props: Props) => {
 	const editContext = useContext(EditContext);
 
 	const [subject, setSubject] = useState(props.current.subject);
-	const [type, setType] = useState(props.current.type);
-	const [range, setRange] = useState(props.current.item.range);
+	const [kind, setKind] = useState(props.current.kind);
+	//const [range, setRange] = useState(props.current.item.range);
 	//const [range, setRange] = useState(props.timeline.item.);
 	const [progress, setProgress] = useState(0);
 
 	function handleChangeSubject(s: string) {
 		setSubject(s);
 		props.current.subject = s;
-	}
-
-	function handleChangeType(s: string) {
-		if (["group", "item"].includes(s)) {
-			const t = s as TaskTimelineType;
-			setType(t);
-			props.current.type = t;
-		}
-	}
-
-	function handleChangeWorkload(n: number) {
-		console.debug(n);
-	}
-
-	function handleChangeProgress(n: number) {
-		setProgress(n);
-		if (type === "item") {
-			props.current.item.works.push({
-				member: "",
-				progress: n,
-				state: "enabled",
-			});
-		}
 	}
 
 	return (
@@ -64,43 +40,34 @@ const Component: NextPage<Props> = (props: Props) => {
 					/>
 				</div>
 				<div className='timeline-kind'>
-					<>
-						<select
-							value={type}
-							onChange={ev => handleChangeType(ev.target.value)}
-						>
-							<option value="group">📁</option>
-							<option value="item">👻</option>
-						</select>
-					</>
 				</div>
 				<div className='timeline-workload'>
 					{
-						type === "item" ? (
+						kind === "task" ? (
 							<input
 								type="number"
 								min={0}
-								value={range}
-								onChange={ev => handleChangeWorkload(ev.target.valueAsNumber)}
+								// value={range}
+								// onChange={ev => handleChangeWorkload(ev.target.valueAsNumber)}
 							/>
 						) : null
 					}
 				</div>
 				<div className='timeline-resource'>
 					{
-						type === "item" ? (
+						kind === "task" ? (
 							<button>list</button>
 						) : null
 					}
 				</div>
 				<div className='timeline-from'>
 					{
-						type === "group" ? (
+						kind === "group" ? (
 							<time>start</time>
 						) : null
 					}
 					{
-						type === "item" ? (
+						kind === "task" ? (
 							<time>start</time>
 						) : null
 					}
@@ -110,15 +77,15 @@ const Component: NextPage<Props> = (props: Props) => {
 				</div>
 				<div className='timeline-progress'>
 					{
-						type === "group" ? (
+						kind === "group" ? (
 							<span>
 								<span>
 									<input
 										type="number"
 										min={0}
 										max={100}
-										value={progress}
-										onChange={ev => handleChangeProgress(ev.target.valueAsNumber)}
+										//value={progress}
+										//onChange={ev => handleChangeProgress(ev.target.valueAsNumber)}
 									/>
 								</span>
 								<span>%</span>
@@ -126,7 +93,7 @@ const Component: NextPage<Props> = (props: Props) => {
 						) : null
 					}
 					{
-						type === "item" ? (
+						kind === "task" ? (
 							<span>
 								<span>{progress}</span>
 								<span>%</span>
