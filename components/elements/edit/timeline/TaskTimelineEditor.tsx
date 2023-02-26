@@ -7,7 +7,7 @@ import { useLocale } from "@/models/locales/locale";
 import * as Timeline from "../../../../models/data/setting/Timeline";
 
 interface Props {
-	group: Timeline.TaskTimeline | null;
+	parent: Timeline.GroupTimeline | null;
 	current: Timeline.TaskTimeline;
 }
 

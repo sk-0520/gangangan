@@ -5,7 +5,8 @@ import { v4 } from "uuid";
 import { EditContext } from "@/models/data/context/EditContext";
 import { useLocale } from "@/models/locales/locale";
 
-import TimelineTaskEditor from "./TimelineTaskEditor";
+import GroupTimelineEditor from "./GroupTimelineEditor";
+import TaskTimelineEditor from "./TaskTimelineEditor";
 import * as Timeline from "../../../../models/data/setting/Timeline";
 
 interface Props {
@@ -20,22 +21,40 @@ const Component: NextPage<Props> = (props: Props) => {
 		minHeight: editContext.design.cell.minHeight,
 	};
 
-	//const [newTimeline, setNewTimeline] = useState<Timeline.TaskTimeline>();
-	const newTimeline = createEmptyTimeline();
+	const [timelines, setTimelines] = useState(editContext.data.setting.timelines);
 
 	function handleAddNewGroup() {
-		console.log(newTimeline);
+		const item: Timeline.GroupTimeline = {
+			id: v4(),
+			kind: "group",
+			subject: "",
+			children: [],
+			comment: "",
+		};
+		setTimelines([
+			...timelines,
+			item,
+		]);
 	}
 
 	return (
 		<div id='timelines'>
 			<>
 				<ul>
-					{editContext.data.setting.timelines.map(a => {
+					{timelines.map(a => {
 						return (
 							<>
 								<li key={a.id} style={heightStyle}>
-									<TimelineTaskEditor group={null} current={a} />
+									{
+										a.kind === "group" ? (
+											<GroupTimelineEditor parent={null} current={a} />
+										) : <></>
+									}
+									{
+										a.kind === "task" ? (
+											<TaskTimelineEditor parent={null} current={a} />
+										) : <></>
+									}
 								</li>
 							</>
 						);
@@ -51,17 +70,3 @@ const Component: NextPage<Props> = (props: Props) => {
 };
 
 export default Component;
-
-function createEmptyTimeline(): Timeline.TaskTimeline {
-	const result: Timeline.TaskTimeline = {
-		id: "",
-		kind: "task",
-		subject: "NEW",
-		comment: "",
-		previous: [],
-		range: "1.00:00:00.0",
-		works: [],
-	};
-
-	return result;
-}
