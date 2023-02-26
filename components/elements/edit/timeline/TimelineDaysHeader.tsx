@@ -50,7 +50,6 @@ const Component: NextPage = () => {
 	return (
 		<div id='days-header'>
 			<table>
-				<tbody>
 					<thead>
 						<tr className='year-month'>
 							{yearMonthBucket.map(a => {
@@ -62,21 +61,18 @@ const Component: NextPage = () => {
 								);
 							})}
 						</tr>
-					</thead>
-					<tbody>
 						<tr className='day'>
 							{dates.map(a => <td key={a.toISOString()} className='cell' style={cellStyle}>{a.getDate()}</td>)}
 						</tr>
 						<tr className='week'>
 							{dates.map(a => <td key={a.toISOString()} className='cell' style={cellStyle}>{locale.calendar.week.short[toWeekDay(a.getDay())]}</td>)}
 						</tr>
-					</tbody>
+					</thead>
 					<tbody>
 						<tr className='pin'>
 							{dates.map(a => <td key={a.toISOString()} className='cell' style={cellStyle}>@</td>)}
 						</tr>
 					</tbody>
-				</tbody>
 			</table>
 		</div>
 	);
