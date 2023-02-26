@@ -245,7 +245,7 @@ function fromContext(source: Readonly<Setting>, context: SettingContext): Settin
 				color: b.color,
 			})),
 		})),
-		timelines: [],
+		timelines: source.timelines,
 		versions: []
 	};
 }

@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { v4 } from "uuid";
 
 import { EditContext } from "@/models/data/context/EditContext";
@@ -35,6 +35,7 @@ const Component: NextPage<Props> = (props: Props) => {
 			...timelines,
 			item,
 		]);
+		editContext.data.setting.timelines.push(item);
 	}
 
 	return (
