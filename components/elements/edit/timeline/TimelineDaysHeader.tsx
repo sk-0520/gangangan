@@ -1,8 +1,8 @@
 import { NextPage } from "next";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import { EditContext } from "@/models/data/context/EditContext";
-import { getWeekDays, toWeekDay } from "@/models/data/setting/WeekDay";
+import { toWeekDay } from "@/models/data/setting/WeekDay";
 import { useLocale } from "@/models/locales/locale";
 
 const Component: NextPage = () => {
@@ -62,15 +62,15 @@ const Component: NextPage = () => {
 							})}
 						</tr>
 						<tr className='day'>
-							{dates.map(a => <td key={a.toISOString()} className='cell' style={cellStyle}>{a.getDate()}</td>)}
+							{dates.map(a => <td key={a.getTime()} className='cell' style={cellStyle}>{a.getDate()}</td>)}
 						</tr>
 						<tr className='week'>
-							{dates.map(a => <td key={a.toISOString()} className='cell' style={cellStyle}>{locale.calendar.week.short[toWeekDay(a.getDay())]}</td>)}
+							{dates.map(a => <td key={a.getTime()} className='cell' style={cellStyle}>{locale.calendar.week.short[toWeekDay(a.getDay())]}</td>)}
 						</tr>
 					</thead>
 					<tbody>
 						<tr className='pin'>
-							{dates.map(a => <td key={a.toISOString()} className='cell' style={cellStyle}>@</td>)}
+							{dates.map(a => <td key={a.getTime()} className='cell' style={cellStyle}>@</td>)}
 						</tr>
 					</tbody>
 			</table>

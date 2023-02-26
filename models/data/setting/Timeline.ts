@@ -18,7 +18,7 @@ export interface Timeline {
 }
 
 export interface GroupTimeline extends Timeline {
-	id: "group";
+	kind: "group";
 	children: Array<GroupTimeline | TaskTimeline>;
 }
 
@@ -45,7 +45,7 @@ export interface TaskTimelineWork {
 }
 
 export interface TaskTimeline extends Timeline {
-	id: "task";
+	kind: "task";
 	static?: string;
 	previous: Array<TimelineId>;
 	range: ISO8601.Time;

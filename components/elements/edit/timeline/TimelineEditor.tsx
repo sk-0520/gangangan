@@ -2,7 +2,7 @@ import { NextPage } from "next";
 
 import TimelineDaysHeader from "./TimelineDaysHeader";
 import TimelineHidariue from "./TimelineHidariue";
-import TimelineTasks from "./TimelineTasks";
+import TimelineItems from "./TimelineItems";
 import TimelineViewer from "./TimelineViewer";
 
 const Component: NextPage = () => {
@@ -10,7 +10,7 @@ const Component: NextPage = () => {
 		<div id='timeline'>
 			<TimelineHidariue />
 			<TimelineDaysHeader />
-			<TimelineTasks />
+			<TimelineItems />
 			<TimelineViewer />
 		</div>
 	);

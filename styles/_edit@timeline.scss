@@ -1,13 +1,12 @@
 #timeline {
 	$timeline-header-id-width: 4ch;
 	$timeline-header-task-width: 20ch;
-	$timeline-header-kind-width: 5ch;
 	$timeline-header-workload-width: 4ch;
 	$timeline-header-resource-width: 6ch;
 	$timeline-header-from-width: 8ch;
 	$timeline-header-to-width: 8ch;
 	$timeline-header-progress-width: 4ch;
-	$timeline-header-width: $timeline-header-id-width + $timeline-header-task-width + $timeline-header-kind-width +
+	$timeline-header-width: $timeline-header-id-width + $timeline-header-task-width +
 		$timeline-header-workload-width + $timeline-header-resource-width + $timeline-header-from-width +
 		$timeline-header-to-width + $timeline-header-progress-width;
 
@@ -27,13 +26,6 @@
 		}
 		.timeline-task {
 			width: $timeline-header-task-width;
-		}
-		.timeline-kind {
-			width: $timeline-header-kind-width;
-
-			input[type="number"] {
-				width: 100%;
-			}
 		}
 		.timeline-workload {
 			width: $timeline-header-workload-width;
@@ -102,7 +94,7 @@
 		}
 	}
 
-	#tasks {
+	#timelines {
 		background: orange;
 
 		z-index: 0;

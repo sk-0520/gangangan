@@ -23,12 +23,12 @@ const Component: NextPage<Props> = (props: Props) => {
 	//const [newTimeline, setNewTimeline] = useState<Timeline.TaskTimeline>();
 	const newTimeline = createEmptyTimeline();
 
-	function handleAddTask() {
+	function handleAddNewGroup() {
 		console.log(newTimeline);
 	}
 
 	return (
-		<div id='tasks'>
+		<div id='timelines'>
 			<>
 				<ul>
 					{editContext.data.setting.timelines.map(a => {
@@ -44,7 +44,7 @@ const Component: NextPage<Props> = (props: Props) => {
 
 				<hr />
 
-				<button type='button' onClick={handleAddTask}>add new task</button>
+				<button type='button' onClick={handleAddNewGroup}>add new group</button>
 			</>
 		</div>
 	);
@@ -58,17 +58,9 @@ function createEmptyTimeline(): Timeline.TaskTimeline {
 		kind: "task",
 		subject: "NEW",
 		comment: "",
-		type: "group",
-		group: {
-			parentGroupId: "",
-		},
-		item: {
-			prev: {
-				items: [],
-			},
-			range: "1.00:00:00.0",
-			works: [],
-		}
+		previous: [],
+		range: "1.00:00:00.0",
+		works: [],
 	};
 
 	return result;

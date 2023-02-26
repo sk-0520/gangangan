@@ -8,7 +8,7 @@ import * as Timeline from "../../../../models/data/setting/Timeline";
 
 interface Props {
 	group: Timeline.TaskTimeline | null;
-	current: Timeline.GroupTimeline |Timeline.TaskTimeline;
+	current: Timeline.TaskTimeline;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -16,7 +16,7 @@ const Component: NextPage<Props> = (props: Props) => {
 	const editContext = useContext(EditContext);
 
 	const [subject, setSubject] = useState(props.current.subject);
-	const [kind, setKind] = useState(props.current.kind);
+	//const [kind, setKind] = useState(props.current.kind);
 	//const [range, setRange] = useState(props.current.item.range);
 	//const [range, setRange] = useState(props.timeline.item.);
 	const [progress, setProgress] = useState(0);
@@ -39,67 +39,28 @@ const Component: NextPage<Props> = (props: Props) => {
 						onChange={ev => handleChangeSubject(ev.target.value)}
 					/>
 				</div>
-				<div className='timeline-kind'>
-				</div>
 				<div className='timeline-workload'>
-					{
-						kind === "task" ? (
-							<input
-								type="number"
-								min={0}
-								// value={range}
-								// onChange={ev => handleChangeWorkload(ev.target.valueAsNumber)}
-							/>
-						) : null
-					}
+					<input
+						type="number"
+						min={0}
+					// value={range}
+					// onChange={ev => handleChangeWorkload(ev.target.valueAsNumber)}
+					/>
 				</div>
 				<div className='timeline-resource'>
-					{
-						kind === "task" ? (
-							<button>list</button>
-						) : null
-					}
+					<button>list</button>
 				</div>
 				<div className='timeline-from'>
-					{
-						kind === "group" ? (
-							<time>start</time>
-						) : null
-					}
-					{
-						kind === "task" ? (
-							<time>start</time>
-						) : null
-					}
+					<time>start</time>
 				</div>
 				<div className='timeline-to'>
 					<time>end</time>
 				</div>
 				<div className='timeline-progress'>
-					{
-						kind === "group" ? (
-							<span>
-								<span>
-									<input
-										type="number"
-										min={0}
-										max={100}
-										//value={progress}
-										//onChange={ev => handleChangeProgress(ev.target.valueAsNumber)}
-									/>
-								</span>
-								<span>%</span>
-							</span>
-						) : null
-					}
-					{
-						kind === "task" ? (
-							<span>
-								<span>{progress}</span>
-								<span>%</span>
-							</span>
-						) : null
-					}
+					<span>
+						<span>{progress}</span>
+						<span>%</span>
+					</span>
 				</div>
 			</div>
 		</div >
