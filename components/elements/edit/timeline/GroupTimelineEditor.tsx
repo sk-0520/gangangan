@@ -27,7 +27,7 @@ const Component: NextPage<Props> = (props: Props) => {
 	}
 
 	return (
-		<div className='task'>
+		<div className='group'>
 			<div className='timeline-header'>
 				<div className='timeline-id'>
 					{props.current.id}
