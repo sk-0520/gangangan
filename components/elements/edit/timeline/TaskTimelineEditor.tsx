@@ -37,7 +37,7 @@ const Component: NextPage<Props> = (props: Props) => {
 	return (
 		<div className='task' style={heightStyle}>
 			<div className='timeline-header'>
-				<div className='timeline-id' title={props.currentTimeline.id}>
+				<div className='timeline-id' title={props.currentTimeline.id} style={{paddingLeft: Timelines.toLayoutLevel(props.treeIndexes)}}>
 					{Timelines.toIndexNumber(props.treeIndexes, props.currentIndex)}
 				</div>
 				<div className='timeline-task'>

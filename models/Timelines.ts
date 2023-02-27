@@ -30,6 +30,17 @@ export default abstract class Timelines {
 	}
 
 	public static toIndexNumber(treeIndexes: ReadonlyArray<number>, currentIndex: number): string {
-		return treeIndexes.join(".") + "." + (currentIndex + 1);
+		const currentNumber = currentIndex + 1;
+
+		if(treeIndexes.length) {
+			return treeIndexes.map(a => a + 1).join(".") + "." + currentNumber;
+		}
+
+		return currentNumber.toString();
+	}
+
+	public static toLayoutLevel(treeIndexes: ReadonlyArray<number>): string
+	{
+		return treeIndexes.length + "ch";
 	}
 }
