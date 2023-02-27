@@ -15,6 +15,11 @@ const Component: NextPage<Props> = (props: Props) => {
 	const locale = useLocale();
 	const editContext = useContext(EditContext);
 
+	const heightStyle = {
+		maxHeight: editContext.design.cell.maxHeight,
+		minHeight: editContext.design.cell.minHeight,
+	};
+
 	const [subject, setSubject] = useState(props.current.subject);
 	//const [kind, setKind] = useState(props.current.kind);
 	//const [range, setRange] = useState(props.current.item.range);
@@ -27,7 +32,7 @@ const Component: NextPage<Props> = (props: Props) => {
 	}
 
 	return (
-		<div className='task'>
+		<div className='task' style={heightStyle}>
 			<div className='timeline-header'>
 				<div className='timeline-id'>
 					{props.current.id}

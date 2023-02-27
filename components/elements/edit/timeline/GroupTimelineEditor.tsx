@@ -1,9 +1,12 @@
 import { NextPage } from "next";
 import { useContext, useState } from "react";
 
+import Timelines from "@/models/Timelines";
 import { EditContext } from "@/models/data/context/EditContext";
 import { useLocale } from "@/models/locales/locale";
 
+import GroupTimelineEditor from "./GroupTimelineEditor";
+import TaskTimelineEditor from "./TaskTimelineEditor";
 import * as Timeline from "../../../../models/data/setting/Timeline";
 
 interface Props {
@@ -25,15 +28,36 @@ const Component: NextPage<Props> = (props: Props) => {
 	//const [range, setRange] = useState(props.current.item.range);
 	//const [range, setRange] = useState(props.timeline.item.);
 	const [progress, setProgress] = useState(0);
+	const [children, setChildren] = useState(props.current.children);
 
 	function handleChangeSubject(s: string) {
 		setSubject(s);
 		props.current.subject = s;
 	}
 
+	function handleAddNewGroup() {
+		const item = Timelines.createNewGroup();
+
+		setChildren([
+			...children,
+			item,
+		]);
+		props.current.children.push(item);
+	}
+
+	function handleAddNewTask() {
+		const item = Timelines.createNewTask();
+
+		setChildren([
+			...children,
+			item,
+		]);
+		props.current.children.push(item);
+	}
+
 	return (
 		<div className='group'>
-			<div className='timeline-header'>
+			<div className='timeline-header' style={heightStyle}>
 				<div className='timeline-id'>
 					{props.current.id}
 				</div>
@@ -62,6 +86,28 @@ const Component: NextPage<Props> = (props: Props) => {
 					</span>
 				</div>
 			</div>
+			<button onClick={handleAddNewGroup}>G</button>
+			<button onClick={handleAddNewTask}>T</button>
+			{props.current.children.length ? (
+				<ul>
+					{props.current.children.map(a => {
+						return (
+							<li key={a.id}>
+								{
+									a.kind === "group" ? (
+										<GroupTimelineEditor parent={props.current} current={a} />
+									) : <></>
+								}
+								{
+									a.kind === "task" ? (
+										<TaskTimelineEditor parent={props.current} current={a} />
+									) : <></>
+								}
+							</li>
+						);
+					})}
+				</ul>
+			) : null}
 		</div >
 	);
 };

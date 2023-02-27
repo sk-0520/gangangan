@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { EditContext } from "@/models/data/context/EditContext";
@@ -8,8 +8,14 @@ const Component: NextPage = () => {
 	const editContext = useContext(EditContext);
 	const { register } = useForm<EditContext>();
 
-	function download() {
-		const json = JSON.stringify(editContext.data.setting, undefined, 2);
+	const [settingJson, setSettingJson] = useState("");
+
+	useEffect(() => {
+		handleJsonUpdate();
+	});
+
+	function handleDownload() {
+		const json = JSON.stringify(editContext.data.setting);
 
 		// download
 		const blob = new Blob([json], { type: "application/json" });
@@ -17,6 +23,15 @@ const Component: NextPage = () => {
 		link.href = window.URL.createObjectURL(blob);
 		link.download = editContext.data.fileName;
 		link.click();
+	}
+
+	function handleJsonUpdate() {
+		const json = JSON.stringify(editContext.data.setting, undefined, 2);
+		setSettingJson(json);
+	}
+
+	function handleJsonCopy() {
+		navigator.clipboard.writeText(settingJson);
 	}
 
 	return (
@@ -60,8 +75,15 @@ const Component: NextPage = () => {
 				<dt>出力</dt>
 				<dd>
 					<ul>
-						<li><button onClick={download}>DOWN LOAD</button></li>
+						<li><button onClick={handleDownload}>DOWN LOAD</button></li>
 					</ul>
+				</dd>
+				<dd>
+					<button onClick={handleJsonUpdate}>update</button>
+					<button onClick={handleJsonCopy}>copy</button>
+					<textarea
+						value={settingJson}
+					/>
 				</dd>
 			</dl>
 		</>
