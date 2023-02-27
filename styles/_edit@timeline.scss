@@ -104,8 +104,15 @@
 		grid-column-start: 1;
 
 		.group {
+			& > .timeline-header {
+				background-color: yellowgreen;
+				border-left: 1px solid red;
+			}
 		}
 		.task {
+			& > .timeline-header {
+				background-color: lime;
+			}
 		}
 	}
 
