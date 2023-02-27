@@ -15,6 +15,11 @@ const Component: NextPage<Props> = (props: Props) => {
 	const locale = useLocale();
 	const editContext = useContext(EditContext);
 
+	const heightStyle = {
+		maxHeight: editContext.design.cell.maxHeight,
+		minHeight: editContext.design.cell.minHeight,
+	};
+
 	const [subject, setSubject] = useState(props.current.subject);
 	//const [kind, setKind] = useState(props.current.kind);
 	//const [range, setRange] = useState(props.current.item.range);
@@ -40,12 +45,6 @@ const Component: NextPage<Props> = (props: Props) => {
 					/>
 				</div>
 				<div className='timeline-workload'>
-					<input
-						type="number"
-						min={0}
-					// value={range}
-					// onChange={ev => handleChangeWorkload(ev.target.valueAsNumber)}
-					/>
 				</div>
 				<div className='timeline-resource'>
 					<button>list</button>

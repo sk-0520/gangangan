@@ -1,4 +1,10 @@
 import * as number from "./number";
+import * as throws from "./throws";
+
+interface TimeSpanParseResult {
+	timeSpan?: TimeSpan;
+	exception?: Error;
+}
 
 /**
  * 時間を扱う。
@@ -71,6 +77,65 @@ export class TimeSpan {
 
 	public compare(timeSpan: TimeSpan): number {
 		return this.ticks - timeSpan.ticks;
+	}
+
+	private static parseISO8601(s: string): TimeSpanParseResult {
+		return {
+			exception: new throws.NotImplementedError(),
+		};
+	}
+
+	private static parseReadable(s: string): TimeSpanParseResult {
+		const matches = /\A((?<DAY>\d+)\.)?(?<H>\d+):(?<M>\d+):(?<S>\d+)\z/.exec(s);
+		if (!matches || !matches.groups) {
+			return {
+				exception: new throws.ParseError(s),
+			};
+		}
+
+		const totalSeconds
+			= parseInt(matches.groups.S)
+			+ (parseInt(matches.groups.M) * 60)
+			+ (parseInt(matches.groups.H) * 60 * 60)
+			+ (matches.groups.DAY ? parseInt(matches.groups.DAY) * 60 * 60 * 24 : 0);
+
+		return {
+			timeSpan: TimeSpan.fromSeconds(totalSeconds)
+		};
+	}
+
+	private static parseCore(s: string): TimeSpanParseResult {
+		if (!s) {
+			return {
+				exception: new throws.ParseError(s),
+			};
+		}
+
+		if (s[0] === "P") {
+			return TimeSpan.parseISO8601(s);
+		}
+
+		return TimeSpan.parseReadable(s);
+	}
+
+	public static tryParse(s: string): TimeSpan | null {
+		const result = TimeSpan.parseCore(s);
+
+		if (result.exception) {
+			return null;
+		}
+
+		return result.timeSpan!;
+	}
+
+	public static parse(s: string): TimeSpan {
+		const result = TimeSpan.parseCore(s);
+
+		if (result.exception) {
+			throw result.exception;
+		}
+
+		return result.timeSpan!;
 	}
 
 	//#endregion

@@ -75,6 +75,12 @@ describe("time", () => {
 				expect(expected).toBe(0);
 			}
 		});
+
+		// test.each([
+		// 	["0.00:00:00"]
+		// ])("parse-sec", (input) => {
+		// 	const actual = TimeSpan.parse(input);
+		// });
 	});
 
 	//-----------------------------------
