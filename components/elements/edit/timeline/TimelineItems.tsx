@@ -1,6 +1,5 @@
 import { NextPage } from "next";
-import { useContext, useEffect, useState } from "react";
-import { v4 } from "uuid";
+import { useContext, useState } from "react";
 
 import Timelines from "@/models/Timelines";
 import { EditContext } from "@/models/data/context/EditContext";
@@ -42,18 +41,18 @@ const Component: NextPage<Props> = (props: Props) => {
 		<div id='timelines'>
 			<>
 				<ul>
-					{timelines.map(a => {
+					{timelines.map((a, i) => {
 						return (
 							<>
 								<li key={a.id}>
 									{
 										a.kind === "group" ? (
-											<GroupTimelineEditor parent={null} current={a} />
+											<GroupTimelineEditor treeIndexes={[]} currentIndex={i} parent={null} currentTimeline={a} />
 										) : <></>
 									}
 									{
 										a.kind === "task" ? (
-											<TaskTimelineEditor parent={null} current={a} />
+											<TaskTimelineEditor treeIndexes={[]} currentIndex={i} parent={null} currentTimeline={a} />
 										) : <></>
 									}
 								</li>

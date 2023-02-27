@@ -1,8 +1,8 @@
 import { v4 } from "uuid";
 
-import { GroupTimeline, TaskTimeline } from "./data/setting/Timeline";
+import { GroupTimeline, TaskTimeline, Timeline } from "./data/setting/Timeline";
 
-export default class Timelines {
+export default abstract class Timelines {
 	public static createNewGroup(): GroupTimeline {
 		const item: GroupTimeline = {
 			id: v4(),
@@ -27,5 +27,9 @@ export default class Timelines {
 		};
 
 		return item;
+	}
+
+	public static toIndexNumber(treeIndexes: ReadonlyArray<number>, currentIndex: number): string {
+		return treeIndexes.join(".") + "." + (currentIndex + 1);
 	}
 }

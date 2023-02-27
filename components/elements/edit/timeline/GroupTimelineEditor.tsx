@@ -10,8 +10,10 @@ import TaskTimelineEditor from "./TaskTimelineEditor";
 import * as Timeline from "../../../../models/data/setting/Timeline";
 
 interface Props {
+	treeIndexes: Array<number>;
 	parent: Timeline.GroupTimeline | null;
-	current: Timeline.GroupTimeline;
+	currentIndex: number;
+	currentTimeline: Timeline.GroupTimeline;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -23,16 +25,16 @@ const Component: NextPage<Props> = (props: Props) => {
 		minHeight: editContext.design.cell.minHeight,
 	};
 
-	const [subject, setSubject] = useState(props.current.subject);
+	const [subject, setSubject] = useState(props.currentTimeline.subject);
 	//const [kind, setKind] = useState(props.current.kind);
 	//const [range, setRange] = useState(props.current.item.range);
 	//const [range, setRange] = useState(props.timeline.item.);
 	const [progress, setProgress] = useState(0);
-	const [children, setChildren] = useState(props.current.children);
+	const [children, setChildren] = useState(props.currentTimeline.children);
 
 	function handleChangeSubject(s: string) {
 		setSubject(s);
-		props.current.subject = s;
+		props.currentTimeline.subject = s;
 	}
 
 	function handleAddNewGroup() {
@@ -42,7 +44,7 @@ const Component: NextPage<Props> = (props: Props) => {
 			...children,
 			item,
 		]);
-		props.current.children.push(item);
+		props.currentTimeline.children.push(item);
 	}
 
 	function handleAddNewTask() {
@@ -52,14 +54,14 @@ const Component: NextPage<Props> = (props: Props) => {
 			...children,
 			item,
 		]);
-		props.current.children.push(item);
+		props.currentTimeline.children.push(item);
 	}
 
 	return (
 		<div className='group'>
 			<div className='timeline-header' style={heightStyle}>
-				<div className='timeline-id'>
-					{props.current.id}
+				<div className='timeline-id' title={props.currentTimeline.id}>
+					{Timelines.toIndexNumber(props.treeIndexes, props.currentIndex)}
 				</div>
 				<div className='timeline-task'>
 					<input
@@ -88,19 +90,19 @@ const Component: NextPage<Props> = (props: Props) => {
 			</div>
 			<button onClick={handleAddNewGroup}>G</button>
 			<button onClick={handleAddNewTask}>T</button>
-			{props.current.children.length ? (
+			{props.currentTimeline.children.length ? (
 				<ul>
-					{props.current.children.map(a => {
+					{props.currentTimeline.children.map((a, i) => {
 						return (
 							<li key={a.id}>
 								{
 									a.kind === "group" ? (
-										<GroupTimelineEditor parent={props.current} current={a} />
+										<GroupTimelineEditor treeIndexes={[...props.treeIndexes, i]} currentIndex={i} parent={props.currentTimeline} currentTimeline={a} />
 									) : <></>
 								}
 								{
 									a.kind === "task" ? (
-										<TaskTimelineEditor parent={props.current} current={a} />
+										<TaskTimelineEditor treeIndexes={[...props.treeIndexes, i]} currentIndex={i} parent={props.currentTimeline} currentTimeline={a} />
 									) : <></>
 								}
 							</li>

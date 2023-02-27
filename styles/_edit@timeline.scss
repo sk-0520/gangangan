@@ -1,5 +1,5 @@
 #timeline {
-	$timeline-header-id-width: 4ch;
+	$timeline-header-id-width: 15ch;
 	$timeline-header-task-width: 20ch;
 	$timeline-header-workload-width: 4ch;
 	$timeline-header-resource-width: 6ch;
@@ -23,6 +23,7 @@
 
 		.timeline-id {
 			width: $timeline-header-id-width;
+			padding-left: 0.5ch;
 		}
 		.timeline-task {
 			width: $timeline-header-task-width;
@@ -106,7 +107,6 @@
 		.group {
 			& > .timeline-header {
 				background-color: yellowgreen;
-				border-left: 1px solid red;
 			}
 		}
 		.task {

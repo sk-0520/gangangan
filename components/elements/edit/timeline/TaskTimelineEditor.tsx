@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useContext, useState } from "react";
 
+import Timelines from "@/models/Timelines";
 import { EditContext } from "@/models/data/context/EditContext";
 import { useLocale } from "@/models/locales/locale";
 
@@ -8,7 +9,9 @@ import * as Timeline from "../../../../models/data/setting/Timeline";
 
 interface Props {
 	parent: Timeline.GroupTimeline | null;
-	current: Timeline.TaskTimeline;
+	treeIndexes: Array<number>;
+	currentIndex: number;
+	currentTimeline: Timeline.TaskTimeline;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -20,7 +23,7 @@ const Component: NextPage<Props> = (props: Props) => {
 		minHeight: editContext.design.cell.minHeight,
 	};
 
-	const [subject, setSubject] = useState(props.current.subject);
+	const [subject, setSubject] = useState(props.currentTimeline.subject);
 	//const [kind, setKind] = useState(props.current.kind);
 	//const [range, setRange] = useState(props.current.item.range);
 	//const [range, setRange] = useState(props.timeline.item.);
@@ -28,14 +31,14 @@ const Component: NextPage<Props> = (props: Props) => {
 
 	function handleChangeSubject(s: string) {
 		setSubject(s);
-		props.current.subject = s;
+		props.currentTimeline.subject = s;
 	}
 
 	return (
 		<div className='task' style={heightStyle}>
 			<div className='timeline-header'>
-				<div className='timeline-id'>
-					{props.current.id}
+				<div className='timeline-id' title={props.currentTimeline.id}>
+					{Timelines.toIndexNumber(props.treeIndexes, props.currentIndex)}
 				</div>
 				<div className='timeline-task'>
 					<input
