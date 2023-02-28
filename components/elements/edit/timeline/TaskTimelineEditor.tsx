@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import { useContext, useState } from "react";
 
-import Timelines from "@/models/Timelines";
 import { EditContext } from "@/models/data/context/EditContext";
 import { useLocale } from "@/models/locales/locale";
 
@@ -51,6 +50,7 @@ const Component: NextPage<Props> = (props: Props) => {
 				<div className='timeline-workload'>
 					<input
 						type="number"
+						step="0.25"
 						min={0}
 					// value={range}
 					// onChange={ev => handleChangeWorkload(ev.target.valueAsNumber)}

@@ -74,7 +74,6 @@ const Component: NextPage<Props> = (props: Props) => {
 				<div className='timeline-workload'>
 				</div>
 				<div className='timeline-resource'>
-					<button>list</button>
 				</div>
 				<div className='timeline-from'>
 					<time>start</time>
