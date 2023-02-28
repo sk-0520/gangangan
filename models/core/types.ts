@@ -47,7 +47,7 @@ export function isNullish(arg: unknown): arg is null | undefined {
  * @param arg
  * @returns
  */
-export function isSymbol(arg: unknown): arg is Symbol {
+export function isSymbol(arg: unknown): arg is symbol {
 	return typeof arg === "symbol";
 }
 
@@ -160,7 +160,7 @@ export function hasNullish(obj: unknown, key: PropertyKey): obj is Record<Proper
  * @param key プロパティ名。
  * @returns
  */
-export function hasSymbol(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, Symbol> {
+export function hasSymbol(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, symbol> {
 	return hasProperty(obj, key) && isSymbol(obj[key]);
 }
 

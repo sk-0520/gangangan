@@ -14,7 +14,7 @@ const Component: NextPage = () => {
 		to: new Date(editContext.data.setting.calendar.range.to),
 	};
 
-	let diff = range.to.getTime() - range.from.getTime();
+	const diff = range.to.getTime() - range.from.getTime();
 	const days = diff / (24 * 60 * 60 * 1000);
 
 	const dates = Array.from(Array(days), (_, index) => {
