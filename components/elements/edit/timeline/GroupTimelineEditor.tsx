@@ -8,6 +8,7 @@ import { useLocale } from "@/models/locales/locale";
 import GroupTimelineEditor from "./GroupTimelineEditor";
 import TaskTimelineEditor from "./TaskTimelineEditor";
 import * as Timeline from "../../../../models/data/setting/Timeline";
+import TimelineNumber from "./TimelineNumber";
 
 interface Props {
 	treeIndexes: Array<number>;
@@ -59,11 +60,11 @@ const Component: NextPage<Props> = (props: Props) => {
 
 	return (
 		<div className='group'>
-			<div className='timeline-header' style={{...heightStyle, paddingLeft: Timelines.toLayoutLevel(props.treeIndexes)}}>
+			<div className='timeline-header' style={heightStyle}>
 				<div className='timeline-id' title={props.currentTimeline.id}>
-					{Timelines.toIndexNumber(props.treeIndexes, props.currentIndex)}
+					<TimelineNumber treeIndexes={props.treeIndexes} currentIndex={props.currentIndex} />
 				</div>
-				<div className='timeline-task'>
+				<div className='timeline-subject'>
 					<input
 						type='text'
 						value={subject}
@@ -97,12 +98,12 @@ const Component: NextPage<Props> = (props: Props) => {
 							<li key={a.id}>
 								{
 									a.kind === "group" ? (
-										<GroupTimelineEditor treeIndexes={[...props.treeIndexes, i]} currentIndex={i} parent={props.currentTimeline} currentTimeline={a} />
+										<GroupTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parent={props.currentTimeline} currentTimeline={a} />
 									) : <></>
 								}
 								{
 									a.kind === "task" ? (
-										<TaskTimelineEditor treeIndexes={[...props.treeIndexes, i]} currentIndex={i} parent={props.currentTimeline} currentTimeline={a} />
+										<TaskTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parent={props.currentTimeline} currentTimeline={a} />
 									) : <></>
 								}
 							</li>

@@ -38,9 +38,4 @@ export default abstract class Timelines {
 
 		return currentNumber.toString();
 	}
-
-	public static toLayoutLevel(treeIndexes: ReadonlyArray<number>): string
-	{
-		return treeIndexes.length + "ch";
-	}
 }

@@ -8,10 +8,11 @@ import { useLocale } from "@/models/locales/locale";
 import GroupTimelineEditor from "./GroupTimelineEditor";
 import TaskTimelineEditor from "./TaskTimelineEditor";
 
-interface Props {
-}
+// interface Props {
+// }
 
-const Component: NextPage<Props> = (props: Props) => {
+//const Component: NextPage<Props> = (props: Props) => {
+const Component: NextPage = () => {
 	const locale = useLocale();
 	const editContext = useContext(EditContext);
 

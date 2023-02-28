@@ -1,14 +1,11 @@
 #timeline {
-	$timeline-header-id-width: 15ch;
-	$timeline-header-task-width: 20ch;
-	$timeline-header-workload-width: 4ch;
-	$timeline-header-resource-width: 6ch;
+	$timeline-header-id-width: 10ch;
+	$timeline-header-subject-width: 20ch;
+	$timeline-header-workload-width: 7ch;
+	$timeline-header-resource-width: 8ch;
 	$timeline-header-from-width: 8ch;
 	$timeline-header-to-width: 8ch;
 	$timeline-header-progress-width: 4ch;
-	$timeline-header-width: $timeline-header-id-width + $timeline-header-task-width +
-		$timeline-header-workload-width + $timeline-header-resource-width + $timeline-header-from-width +
-		$timeline-header-to-width + $timeline-header-progress-width;
 
 	$app-header-height: 80px;
 
@@ -23,10 +20,10 @@
 
 		.timeline-id {
 			width: $timeline-header-id-width;
-			padding-left: 0.5ch;
+			//padding-left: 0.5ch;
 		}
-		.timeline-task {
-			width: $timeline-header-task-width;
+		.timeline-subject {
+			width: $timeline-header-subject-width;
 		}
 		.timeline-workload {
 			width: $timeline-header-workload-width;
@@ -60,7 +57,6 @@
 		grid-column-start: 1;
 
 		height: $app-header-height;
-		//width: $timeline-header-width;
 	}
 
 	#days-header {

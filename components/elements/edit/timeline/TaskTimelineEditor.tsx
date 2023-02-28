@@ -6,6 +6,7 @@ import { EditContext } from "@/models/data/context/EditContext";
 import { useLocale } from "@/models/locales/locale";
 
 import * as Timeline from "../../../../models/data/setting/Timeline";
+import TimelineNumber from "./TimelineNumber";
 
 interface Props {
 	parent: Timeline.GroupTimeline | null;
@@ -37,10 +38,10 @@ const Component: NextPage<Props> = (props: Props) => {
 	return (
 		<div className='task' style={heightStyle}>
 			<div className='timeline-header'>
-				<div className='timeline-id' title={props.currentTimeline.id} style={{paddingLeft: Timelines.toLayoutLevel(props.treeIndexes)}}>
-					{Timelines.toIndexNumber(props.treeIndexes, props.currentIndex)}
+				<div className='timeline-id' title={props.currentTimeline.id}>
+					<TimelineNumber treeIndexes={props.treeIndexes} currentIndex={props.currentIndex} />
 				</div>
-				<div className='timeline-task'>
+				<div className='timeline-subject'>
 					<input
 						type='text'
 						value={subject}
