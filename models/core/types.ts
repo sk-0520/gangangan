@@ -92,7 +92,7 @@ export function isBoolean(arg: unknown): arg is boolean {
  * @param arg
  * @returns
  */
-export function isArray<T extends unknown>(arg: unknown): arg is Array<T> {
+export function isArray(arg: unknown): arg is Array<unknown> {
 	return Array.isArray(arg);
 }
 
@@ -101,7 +101,7 @@ export function isArray<T extends unknown>(arg: unknown): arg is Array<T> {
  * @param arg
  * @returns
  */
-export function isObject(arg: unknown): arg is Object {
+export function isObject(arg: unknown): arg is object {
 	return arg !== null && typeof arg === "object" && !Array.isArray(arg);
 }
 
@@ -110,7 +110,8 @@ export function isObject(arg: unknown): arg is Object {
  * @param arg
  * @returns
  */
-export function isFunction<T extends Function>(arg: unknown): arg is T {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function isFunction(arg: unknown): arg is Function {
 	return typeof arg === "function";
 }
 
@@ -210,7 +211,7 @@ export function hasBoolean(obj: unknown, key: PropertyKey): obj is Record<Proper
  * @param key プロパティ名。
  * @returns
  */
-export function hasObject(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, Object> {
+export function hasObject(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, object> {
 	return hasProperty(obj, key) && isObject(obj[key]);
 }
 
@@ -220,8 +221,8 @@ export function hasObject(obj: unknown, key: PropertyKey): obj is Record<Propert
  * @param key プロパティ名。
  * @returns
  */
-export function hasArray<T extends unknown>(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, Array<T>> {
-	return hasProperty(obj, key) && isArray<T>(obj[key]);
+export function hasArray(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, Array<unknown>> {
+	return hasProperty(obj, key) && isArray(obj[key]);
 }
 
 /**
@@ -230,8 +231,9 @@ export function hasArray<T extends unknown>(obj: unknown, key: PropertyKey): obj
  * @param key プロパティ名。
  * @returns
  */
-export function hasFunction<T extends Function>(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, T> {
-	return hasProperty(obj, key) && isFunction<T>(obj[key]);
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function hasFunction(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, Function> {
+	return hasProperty(obj, key) && isFunction(obj[key]);
 }
 
 /**
@@ -415,11 +417,13 @@ export function flatClone<TResult extends { [K in keyof TResult]: TResult[K] }, 
 
 	const result = Object.fromEntries([...properties].map(i => [i, source[i]]));
 
-	return result as any as TResult;
+	return result as unknown as TResult;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export function nameof(name: Function): string;
 export function nameof<T extends object>(name: Extract<keyof T, string>): string;
+// eslint-disable-next-line @typescript-eslint/ban-types
 export function nameof<T>(name: Extract<keyof T, string> | Function): string {
 	if (typeof name === "function") {
 		return name.name;
@@ -428,13 +432,13 @@ export function nameof<T>(name: Extract<keyof T, string> | Function): string {
 	return name;
 }
 
-export function toString(input: any): string {
+export function toString(input: unknown): string {
 	switch (typeof input) {
 		case "object":
 			if (input === null) {
 				return "null";
 			}
-				break;
+			break;
 
 		case "undefined":
 			return "undefined";
