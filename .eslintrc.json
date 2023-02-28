@@ -1,57 +1,22 @@
 {
 	"root": true,
-	"extends": "next/core-web-vitals",
-	"rules": {
-		"import/order": [
-			"error",
-			{
-				"groups": [
-					"builtin",
-					"external",
-					"internal",
-					[
-						"parent",
-						"sibling"
-					],
-					"object",
-					"type",
-					"index"
-				],
-				"newlines-between": "always",
-				"alphabetize": {
-					"order": "asc",
-					"caseInsensitive": false
-				}
-			}
-		],
-		"quotes": [
-			"error",
-			"double",
-			{
-				"avoidEscape": true,
-				"allowTemplateLiterals": true
-			}
-		],
-		"semi": "error",
-		"camelcase": "error",
-		"no-extra-semi": "error",
-		"no-mixed-spaces-and-tabs": "error",
-		"no-trailing-spaces": "error",
-		"space-infix-ops": "error",
-		"eqeqeq": "error",
-		"arrow-spacing": "error",
-		"no-else-return": "error",
-		"no-multiple-empty-lines": [
-			"error",
-			{
-				"max": 1
-			}
-		],
-		"no-dupe-class-members": "off",
-		"no-var": "error",
-		"no-label-var": "error",
-		"prefer-spread": "error",
-		"dot-notation": "error",
-		"no-loop-func": "error"
-	}
+	"env": {
+		"browser": true,
+		"es2020": true
+	},
+	"extends": [
+		"plugin:@typescript-eslint/recommended",
+		"next",
+		"next/core-web-vitals"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"sourceType": "module"
+	},
+	"plugins": [
+		"@typescript-eslint"
+	]
 }
