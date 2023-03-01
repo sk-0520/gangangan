@@ -6,6 +6,7 @@ import { useLocale } from "@/models/locales/locale";
 
 import * as Timeline from "../../../../models/data/setting/Timeline";
 import TimelineNumber from "./TimelineNumber";
+import * as time from "@/models/core/time";
 
 interface Props {
 	parent: Timeline.GroupTimeline | null;
@@ -25,13 +26,18 @@ const Component: NextPage<Props> = (props: Props) => {
 
 	const [subject, setSubject] = useState(props.currentTimeline.subject);
 	//const [kind, setKind] = useState(props.current.kind);
-	//const [range, setRange] = useState(props.current.item.range);
+	const [workload, setWorkload] = useState(time.TimeSpan.parse(props.currentTimeline.workload).totalDays);
 	//const [range, setRange] = useState(props.timeline.item.);
 	const [progress, setProgress] = useState(0);
 
 	function handleChangeSubject(s: string) {
 		setSubject(s);
 		props.currentTimeline.subject = s;
+	}
+
+	function handleChangeWorkload(n: number) {
+		setWorkload(n);
+		props.currentTimeline.workload = time.TimeSpan.fromDays(n).toString("readable");
 	}
 
 	return (
@@ -52,8 +58,8 @@ const Component: NextPage<Props> = (props: Props) => {
 						type="number"
 						step="0.25"
 						min={0}
-					// value={range}
-					// onChange={ev => handleChangeWorkload(ev.target.valueAsNumber)}
+						value={workload}
+						onChange={ev => handleChangeWorkload(ev.target.valueAsNumber)}
 					/>
 				</div>
 				<div className='timeline-resource'>

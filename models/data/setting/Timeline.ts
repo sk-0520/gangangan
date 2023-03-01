@@ -46,9 +46,9 @@ export interface TaskTimelineWork {
 
 export interface TaskTimeline extends Timeline {
 	kind: "task";
-	static?: string;
+	static?: ISO8601.DateTime;
 	previous: Array<TimelineId>;
-	range: ISO8601.Time;
+	workload: ISO8601.Time;
 	works: Array<TaskTimelineWork>;
 }
 

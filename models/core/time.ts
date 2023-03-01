@@ -23,6 +23,26 @@ export class TimeSpan {
 
 	//#region property
 
+	public get milliseconds(): number {
+		return this._ticks % 1000;
+	}
+
+	public get seconds(): number {
+		return Math.floor((this._ticks / 1000) % 60);
+	}
+
+	public get minutes(): number {
+		return Math.floor((this._ticks / 1000 / 60) % 60);
+	}
+
+	public get hours(): number {
+		return Math.floor((this._ticks / 1000 / 60 / 60) % 24);
+	}
+
+	public get days(): number {
+		return Math.floor(this._ticks / 1000 / 60 / 60 / 24);
+	}
+
 	public get ticks(): number {
 		return this._ticks;
 	}
@@ -79,6 +99,7 @@ export class TimeSpan {
 		return this.ticks - timeSpan.ticks;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	private static parseISO8601(s: string): TimeSpanParseResult {
 		return {
 			exception: new throws.NotImplementedError(),
@@ -86,7 +107,7 @@ export class TimeSpan {
 	}
 
 	private static parseReadable(s: string): TimeSpanParseResult {
-		const matches = /\A((?<DAY>\d+)\.)?(?<H>\d+):(?<M>\d+):(?<S>\d+)\z/.exec(s);
+		const matches = /^((?<DAY>\d+)\.)?(?<H>\d+):(?<M>\d+):(?<S>\d+)(\.(?<MS>\d{1,3}))?$/.exec(s);
 		if (!matches || !matches.groups) {
 			return {
 				exception: new throws.ParseError(s),
@@ -94,10 +115,20 @@ export class TimeSpan {
 		}
 
 		const totalSeconds
-			= parseInt(matches.groups.S)
-			+ (parseInt(matches.groups.M) * 60)
-			+ (parseInt(matches.groups.H) * 60 * 60)
-			+ (matches.groups.DAY ? parseInt(matches.groups.DAY) * 60 * 60 * 24 : 0);
+			= parseInt(matches.groups.S, 10)
+			+ (parseInt(matches.groups.M, 10) * 60)
+			+ (parseInt(matches.groups.H, 10) * 60 * 60)
+			+ (matches.groups.DAY ? parseInt(matches.groups.DAY, 10) * 60 * 60 * 24 : 0);
+
+		if (matches.groups.MS) {
+			const ms = parseInt(matches.groups.MS, 10);
+			if (ms) {
+				const totalMilliseconds = totalSeconds * 1000 + ms;
+				return {
+					timeSpan: TimeSpan.fromMilliseconds(totalMilliseconds)
+				};
+			}
+		}
 
 		return {
 			timeSpan: TimeSpan.fromSeconds(totalSeconds)
@@ -125,7 +156,11 @@ export class TimeSpan {
 			return null;
 		}
 
-		return result.timeSpan!;
+		if (!result.timeSpan) {
+			throw new throws.ParseError(s);
+		}
+
+		return result.timeSpan;
 	}
 
 	public static parse(s: string): TimeSpan {
@@ -135,7 +170,40 @@ export class TimeSpan {
 			throw result.exception;
 		}
 
-		return result.timeSpan!;
+		if (!result.timeSpan) {
+			throw new throws.ParseError(s);
+		}
+
+		return result.timeSpan;
+	}
+
+	private toReadableString(): string {
+		let result = "";
+		if (this.days) {
+			result += this.days + ".";
+		}
+
+		result += [
+			number.padding(this.hours, 2, "0"),
+			number.padding(this.minutes, 2, "0"),
+			number.padding(this.seconds, 2, "0"),
+		].join(":");
+
+		if(this.milliseconds) {
+			result += "." + number.padding(this.milliseconds, 3, "0");
+		}
+
+		return result;
+	}
+
+	public toString(format: "readable"): string {
+		switch(format) {
+			case "readable":
+				return this.toReadableString();
+
+				default:
+					throw new throws.NotImplementedError();
+		}
 	}
 
 	//#endregion

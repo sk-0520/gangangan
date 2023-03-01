@@ -31,6 +31,40 @@ describe("time", () => {
 			expect(TimeSpan.fromDays(10).ticks).toBe(864_000_000);
 		});
 
+		test("milliseconds", () => {
+			expect(TimeSpan.fromMilliseconds(0).milliseconds).toBe(0);
+			expect(TimeSpan.fromMilliseconds(1_500).milliseconds).toBe(500);
+			expect(TimeSpan.fromMilliseconds(10_125).milliseconds).toBe(125);
+		});
+
+		test("seconds", () => {
+			expect(TimeSpan.fromSeconds(0).seconds).toBe(0);
+			expect(TimeSpan.fromSeconds(15).seconds).toBe(15);
+			expect(TimeSpan.fromSeconds(60).seconds).toBe(0);
+			expect(TimeSpan.fromSeconds(61).seconds).toBe(1);
+		});
+
+		test("minutes", () => {
+			expect(TimeSpan.fromMinutes(0).minutes).toBe(0);
+			expect(TimeSpan.fromMinutes(15).minutes).toBe(15);
+			expect(TimeSpan.fromMinutes(60).minutes).toBe(0);
+			expect(TimeSpan.fromMinutes(61).minutes).toBe(1);
+		});
+
+		test("hours", () => {
+			expect(TimeSpan.fromHours(0).hours).toBe(0);
+			expect(TimeSpan.fromHours(13).hours).toBe(13);
+			expect(TimeSpan.fromHours(24).hours).toBe(0);
+			expect(TimeSpan.fromHours(25).hours).toBe(1);
+		});
+
+		test("days", () => {
+			expect(TimeSpan.fromDays(0).days).toBe(0);
+			expect(TimeSpan.fromDays(13).days).toBe(13);
+			expect(TimeSpan.fromDays(365).days).toBe(365);
+			expect(TimeSpan.fromDays(366).days).toBe(366);
+		});
+
 		test("totalMilliseconds", () => {
 			expect(TimeSpan.fromMilliseconds(0).totalMilliseconds).toBe(0);
 			expect(TimeSpan.fromMilliseconds(1_000).totalMilliseconds).toBe(1_000);
@@ -76,11 +110,21 @@ describe("time", () => {
 			}
 		});
 
-		// test.each([
-		// 	["0.00:00:00"]
-		// ])("parse-sec", (input) => {
-		// 	const actual = TimeSpan.parse(input);
-		// });
+		test.each([
+			["00:00:00"],
+			["00:00:00.0"],
+			["0.00:00:00"],
+			["0.00:00:00.0"],
+			["1.23:34:45.678"],
+			["365.23:34:45.001"],
+			["365.23:34:45.1"],
+		])("parse-readable", (input) => {
+			const actual = TimeSpan.parse(input);
+			const s1 = actual.toString("readable");
+			const dup = TimeSpan.parse(s1);
+			const s2 = dup.toString("readable");
+			expect(s1).toBe(s2);
+		});
 	});
 
 	//-----------------------------------
