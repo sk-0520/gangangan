@@ -17,6 +17,7 @@ const Component: NextPage = () => {
 				<div className='timeline-from'>開始</div>
 				<div className='timeline-to'>終了</div>
 				<div className='timeline-progress'>進捗</div>
+				<div className='timeline-controls'>操作</div>
 			</div>
 		</div>
 	);

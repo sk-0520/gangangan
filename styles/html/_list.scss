@@ -1,0 +1,8 @@
+ul,
+ol {
+	&.line {
+		& > li {
+			display: inline-block;
+		}
+	}
+}

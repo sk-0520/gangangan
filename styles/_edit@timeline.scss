@@ -6,6 +6,7 @@
 	$timeline-header-from-width: 8ch;
 	$timeline-header-to-width: 8ch;
 	$timeline-header-progress-width: 4ch;
+	$timeline-header-controls-item-width: 3ch;
 
 	$app-header-height: 80px;
 
@@ -100,11 +101,24 @@
 		grid-row-start: 2;
 		grid-column-start: 1;
 
+		.timeline-header {
+			.timeline-id {
+				cursor: grab;
+			}
+			.timeline-controls {
+				button.simple {
+					//width: $timeline-header-controls-item-width;
+					padding: 0;
+				}
+			}
+		}
+
 		.group {
 			& > .timeline-header {
 				background-color: yellowgreen;
 			}
 		}
+
 		.task {
 			& > .timeline-header {
 				background-color: lime;

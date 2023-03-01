@@ -6,6 +6,7 @@ import { useLocale } from "@/models/locales/locale";
 
 import * as Timeline from "../../../../models/data/setting/Timeline";
 import TimelineNumber from "./TimelineNumber";
+import TimelineControls from "./TimelineControls";
 import * as time from "@/models/core/time";
 
 interface Props {
@@ -76,6 +77,15 @@ const Component: NextPage<Props> = (props: Props) => {
 						<span>{progress}</span>
 						<span>%</span>
 					</span>
+				</div>
+				<div className="timeline-controls">
+					<TimelineControls moveItem={function (_: "up" | "down"): void {
+						throw new Error("Function not implemented.");
+					}} addItem={function (_: "group" | "task"): void {
+						throw new Error("Function not implemented.");
+					}} deleteItem={function (): void {
+						throw new Error("Function not implemented.");
+					}} />
 				</div>
 			</div>
 		</div >
