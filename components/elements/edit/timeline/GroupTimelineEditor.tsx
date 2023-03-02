@@ -15,7 +15,7 @@ import * as throws from "../../../../models/core/throws";
 
 interface Props {
 	treeIndexes: Array<number>;
-	parent: Timeline.GroupTimeline | null;
+	parentGroup: Timeline.GroupTimeline | null;
 	currentIndex: number;
 	currentTimeline: Timeline.GroupTimeline;
 	updateChildrenOrder: (kind: MoveItemKind, currentTimeline: Timeline.Timeline) => void;
@@ -72,8 +72,10 @@ const Component: NextPage<Props> = (props: Props) => {
 		console.debug('delete');
 	}
 
-	function updateChildrenOrder() {
-		setChildren([...children]);
+	function updateChildrenOrder(kind: MoveItemKind, currentTimeline: Timeline.Timeline) {
+		if (Timelines.moveTimelineOrder(props.currentTimeline.children, kind, currentTimeline)) {
+			setChildren([...props.currentTimeline.children]);
+		}
 	}
 
 	return (
@@ -118,12 +120,12 @@ const Component: NextPage<Props> = (props: Props) => {
 							<li key={a.id}>
 								{
 									a.kind === "group" ? (
-										<GroupTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parent={props.currentTimeline} currentTimeline={a} updateChildrenOrder={updateChildrenOrder} />
+										<GroupTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parentGroup={props.currentTimeline} currentTimeline={a} updateChildrenOrder={updateChildrenOrder} />
 									) : <></>
 								}
 								{
 									a.kind === "task" ? (
-										<TaskTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parent={props.currentTimeline} currentTimeline={a} />
+										<TaskTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parentGroup={props.currentTimeline} currentTimeline={a} updateChildrenOrder={updateChildrenOrder} />
 									) : <></>
 								}
 							</li>

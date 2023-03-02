@@ -12,10 +12,11 @@ import { MoveItemKind, AddItemKind } from "./TimelineControls";
 
 
 interface Props {
-	parent: Timeline.GroupTimeline | null;
+	parentGroup: Timeline.GroupTimeline | null;
 	treeIndexes: Array<number>;
 	currentIndex: number;
 	currentTimeline: Timeline.TaskTimeline;
+	updateChildrenOrder: (kind: MoveItemKind, currentTimeline: Timeline.Timeline) => void;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -45,6 +46,7 @@ const Component: NextPage<Props> = (props: Props) => {
 
 	function handleControlMoveItem(kind: MoveItemKind) {
 		console.debug(kind);
+		props.updateChildrenOrder(kind, props.currentTimeline);
 	}
 	function handleControlAddItem(kind: AddItemKind) {
 		console.debug(kind);

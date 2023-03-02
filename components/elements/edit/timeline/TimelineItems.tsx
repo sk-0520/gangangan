@@ -57,12 +57,12 @@ const Component: NextPage = () => {
 								<li key={a.id}>
 									{
 										a.kind === "group" ? (
-											<GroupTimelineEditor treeIndexes={[]} currentIndex={i} parent={null} currentTimeline={a as Timeline.GroupTimeline/*TODO: 型ガード*/} updateChildrenOrder={updateChildrenOrder} />
+											<GroupTimelineEditor treeIndexes={[]} currentIndex={i} parentGroup={null} currentTimeline={a as Timeline.GroupTimeline/*TODO: 型ガード*/} updateChildrenOrder={updateChildrenOrder} />
 										) : <></>
 									}
 									{
 										a.kind === "task" ? (
-											<TaskTimelineEditor treeIndexes={[]} currentIndex={i} parent={null} currentTimeline={a as Timeline.TaskTimeline/*TODO: 型ガード*/} />
+											<TaskTimelineEditor treeIndexes={[]} currentIndex={i} parentGroup={null} currentTimeline={a as Timeline.TaskTimeline/*TODO: 型ガード*/} updateChildrenOrder={updateChildrenOrder} />
 										) : <></>
 									}
 								</li>
