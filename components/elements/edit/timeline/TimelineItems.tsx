@@ -7,6 +7,9 @@ import { useLocale } from "@/models/locales/locale";
 
 import GroupTimelineEditor from "./GroupTimelineEditor";
 import TaskTimelineEditor from "./TaskTimelineEditor";
+import { MoveItemKind, AddItemKind } from "./TimelineControls";
+import * as Timeline from "../../../../models/data/setting/Timeline";
+import * as throws from "../../../../models/core/throws";
 
 // interface Props {
 // }
@@ -38,6 +41,12 @@ const Component: NextPage = () => {
 		editContext.data.setting.timelines.push(item);
 	}
 
+	function updateChildrenOrder(kind: MoveItemKind, currentTimeline: Timeline.Timeline) {
+		if (Timelines.moveTimelineOrder(timelines, kind, currentTimeline)) {
+			setTimelines(editContext.data.setting.timelines = [...timelines]);
+		}
+	}
+
 	return (
 		<div id='timelines'>
 			<>
@@ -48,12 +57,12 @@ const Component: NextPage = () => {
 								<li key={a.id}>
 									{
 										a.kind === "group" ? (
-											<GroupTimelineEditor treeIndexes={[]} currentIndex={i} parent={null} currentTimeline={a} />
+											<GroupTimelineEditor treeIndexes={[]} currentIndex={i} parent={null} currentTimeline={a as Timeline.GroupTimeline/*TODO: 型ガード*/} updateChildrenOrder={updateChildrenOrder} />
 										) : <></>
 									}
 									{
 										a.kind === "task" ? (
-											<TaskTimelineEditor treeIndexes={[]} currentIndex={i} parent={null} currentTimeline={a} />
+											<TaskTimelineEditor treeIndexes={[]} currentIndex={i} parent={null} currentTimeline={a as Timeline.TaskTimeline/*TODO: 型ガード*/} />
 										) : <></>
 									}
 								</li>

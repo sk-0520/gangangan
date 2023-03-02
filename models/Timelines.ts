@@ -2,6 +2,8 @@ import { v4 } from "uuid";
 
 import { GroupTimeline, TaskTimeline, Timeline } from "./data/setting/Timeline";
 import * as time from "@/models/core/time";
+import { MoveItemKind } from "@/components/elements/edit/timeline/TimelineControls";
+import * as throws from "@/models/core/throws";
 
 export default abstract class Timelines {
 	public static createNewGroup(): GroupTimeline {
@@ -39,5 +41,36 @@ export default abstract class Timelines {
 		}
 
 		return currentNumber.toString();
+	}
+
+	public static moveTimelineOrder(timelines: Array<Timeline>, kind: MoveItemKind, currentTimeline: Timeline): boolean {
+		const currentIndex = timelines.findIndex(a => a === currentTimeline);
+
+		switch (kind) {
+			case "up":
+				if (currentIndex && timelines.length) {
+					const nextIndex = currentIndex - 1;
+					const tempTimeline = timelines[nextIndex];
+					timelines[nextIndex] = currentTimeline;
+					timelines[currentIndex] = tempTimeline;
+					return true;
+				}
+				break;
+
+			case "down":
+				if (currentIndex < timelines.length - 1) {
+					const nextIndex = currentIndex + 1;
+					const tempTimeline = timelines[nextIndex];
+					timelines[nextIndex] = currentTimeline;
+					timelines[currentIndex] = tempTimeline;
+					return true;
+				}
+				break;
+
+			default:
+				throw new throws.NotImplementedError();
+		}
+
+		return false;
 	}
 }

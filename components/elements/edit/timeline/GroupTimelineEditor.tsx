@@ -18,6 +18,7 @@ interface Props {
 	parent: Timeline.GroupTimeline | null;
 	currentIndex: number;
 	currentTimeline: Timeline.GroupTimeline;
+	updateChildrenOrder: (kind: MoveItemKind, currentTimeline: Timeline.Timeline) => void;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -62,37 +63,17 @@ const Component: NextPage<Props> = (props: Props) => {
 	}
 
 	function handleControlMoveItem(kind: MoveItemKind) {
-		console.debug(kind);
-
-		const currentChildren = props.parent?.children ?? editContext.data.setting.timelines;
-		const currentIndex = currentChildren.findIndex(a => a === props.currentTimeline);
-		console.debug("index", currentIndex)
-
-		switch (kind) {
-			case "up":
-				if (currentIndex && 1 < currentChildren.length) {
-					const nextIndex = currentIndex - 1;
-					const tempItem = currentChildren[nextIndex];
-					currentChildren[nextIndex] = props.currentTimeline;
-					currentChildren[currentIndex] = tempItem;
-					setChildren(currentChildren);
-				}
-				break;
-
-			case "down":
-				if (props.parent) {
-				}
-				break;
-
-			default:
-				throw new throws.NotImplementedError();
-		}
+		props.updateChildrenOrder(kind, props.currentTimeline);
 	}
 	function handleControlAddItem(kind: AddItemKind) {
 		console.debug(kind);
 	}
 	function handleControlDeleteItem() {
 		console.debug('delete');
+	}
+
+	function updateChildrenOrder() {
+		setChildren([...children]);
 	}
 
 	return (
@@ -137,7 +118,7 @@ const Component: NextPage<Props> = (props: Props) => {
 							<li key={a.id}>
 								{
 									a.kind === "group" ? (
-										<GroupTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parent={props.currentTimeline} currentTimeline={a} />
+										<GroupTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parent={props.currentTimeline} currentTimeline={a} updateChildrenOrder={updateChildrenOrder} />
 									) : <></>
 								}
 								{
