@@ -8,7 +8,9 @@ import * as Timeline from "../../../../models/data/setting/Timeline";
 import TimelineNumber from "./TimelineNumber";
 import TimelineControls from "./TimelineControls";
 import * as time from "@/models/core/time";
-import { MoveItemKind, AddItemKind } from "./TimelineControls";
+import { MoveItemKind } from "./TimelineControls";
+import Timelines from "@/models/Timelines";
+import * as throws from "../../../../models/core/throws";
 
 
 interface Props {
@@ -17,6 +19,7 @@ interface Props {
 	currentIndex: number;
 	currentTimeline: Timeline.TaskTimeline;
 	updateChildrenOrder: (kind: MoveItemKind, currentTimeline: Timeline.Timeline) => void;
+	addNextSiblingItem: (kind: Timeline.TimelineKind, currentTimeline: Timeline.Timeline) => void;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -48,9 +51,11 @@ const Component: NextPage<Props> = (props: Props) => {
 		console.debug(kind);
 		props.updateChildrenOrder(kind, props.currentTimeline);
 	}
-	function handleControlAddItem(kind: AddItemKind) {
-		console.debug(kind);
+
+	function handleControlAddItem(kind: Timeline.TimelineKind) {
+		props.addNextSiblingItem(kind, props.currentTimeline);
 	}
+
 	function handleControlDeleteItem() {
 		console.debug('delete');
 	}
@@ -93,7 +98,7 @@ const Component: NextPage<Props> = (props: Props) => {
 					</span>
 				</div>
 				<div className="timeline-controls">
-					<TimelineControls moveItem={handleControlMoveItem} addItem={handleControlAddItem} deleteItem={handleControlDeleteItem} />
+					<TimelineControls currentTimelineKind="task" moveItem={handleControlMoveItem} addItem={handleControlAddItem} deleteItem={handleControlDeleteItem} />
 				</div>
 			</div>
 		</div >

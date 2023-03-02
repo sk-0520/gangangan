@@ -1,12 +1,13 @@
+import { TimelineKind } from "@/models/data/setting/Timeline";
 import { NextPage } from "next";
 
 export type MoveItemKind = "up" | "down";
-export type AddItemKind = "group" | "task";
 
 interface Props {
-	moveItem: (dir: MoveItemKind) => void,
-	addItem: (dir: AddItemKind) => void,
-	deleteItem: () => void,
+	currentTimelineKind: TimelineKind;
+	moveItem: (dir: MoveItemKind) => void;
+	addItem: (dir: TimelineKind) => void;
+	deleteItem: () => void;
 }
 
 const Component: NextPage<Props> = (props: Props) => {

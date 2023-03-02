@@ -7,7 +7,7 @@ import { useLocale } from "@/models/locales/locale";
 
 import GroupTimelineEditor from "./GroupTimelineEditor";
 import TaskTimelineEditor from "./TaskTimelineEditor";
-import { MoveItemKind, AddItemKind } from "./TimelineControls";
+import { MoveItemKind } from "./TimelineControls";
 import * as Timeline from "../../../../models/data/setting/Timeline";
 import * as throws from "../../../../models/core/throws";
 

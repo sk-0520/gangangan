@@ -9,8 +9,7 @@ import GroupTimelineEditor from "./GroupTimelineEditor";
 import TaskTimelineEditor from "./TaskTimelineEditor";
 import * as Timeline from "../../../../models/data/setting/Timeline";
 import TimelineNumber from "./TimelineNumber";
-import TimelineControls from "./TimelineControls";
-import { MoveItemKind, AddItemKind } from "./TimelineControls";
+import TimelineControls, { MoveItemKind } from "./TimelineControls";
 import * as throws from "../../../../models/core/throws";
 
 interface Props {
@@ -42,32 +41,34 @@ const Component: NextPage<Props> = (props: Props) => {
 		props.currentTimeline.subject = s;
 	}
 
-	function handleAddNewGroup() {
-		const item = Timelines.createNewGroup();
-
-		setChildren([
-			...children,
-			item,
-		]);
-		props.currentTimeline.children.push(item);
-	}
-
-	function handleAddNewTask() {
-		const item = Timelines.createNewTask();
-
-		setChildren([
-			...children,
-			item,
-		]);
-		props.currentTimeline.children.push(item);
-	}
-
 	function handleControlMoveItem(kind: MoveItemKind) {
 		props.updateChildrenOrder(kind, props.currentTimeline);
 	}
-	function handleControlAddItem(kind: AddItemKind) {
+
+	function handleControlAddItem(kind: Timeline.TimelineKind) {
 		console.debug(kind);
+
+		let item: Timeline.GroupTimeline | Timeline.TaskTimeline | null = null;
+		switch (kind) {
+			case "group":
+				item = Timelines.createNewGroup();
+				break;
+
+			case "task":
+				item = Timelines.createNewTask();
+				break;
+
+			default:
+				throw new throws.NotImplementedError();
+		}
+
+		setChildren([
+			...children,
+			item,
+		]);
+		props.currentTimeline.children.push(item);
 	}
+
 	function handleControlDeleteItem() {
 		console.debug('delete');
 	}
@@ -76,6 +77,27 @@ const Component: NextPage<Props> = (props: Props) => {
 		if (Timelines.moveTimelineOrder(props.currentTimeline.children, kind, currentTimeline)) {
 			setChildren([...props.currentTimeline.children]);
 		}
+	}
+
+	function addNextSiblingItem(kind: Timeline.TimelineKind, currentTimeline: Timeline.Timeline): void {
+		const currentIndex = children.findIndex(a => a === currentTimeline);
+
+		let item: Timeline.GroupTimeline | Timeline.TaskTimeline | null = null;
+		switch (kind) {
+			case "group":
+				item = Timelines.createNewGroup();
+				break;
+
+			case "task":
+				item = Timelines.createNewTask();
+				break;
+
+			default:
+				throw new throws.NotImplementedError();
+		}
+
+		props.currentTimeline.children.splice(currentIndex + 1, 0, item);
+		setChildren([...props.currentTimeline.children]);
 	}
 
 	return (
@@ -108,11 +130,9 @@ const Component: NextPage<Props> = (props: Props) => {
 					</span>
 				</div>
 				<div className="timeline-controls">
-					<TimelineControls moveItem={handleControlMoveItem} addItem={handleControlAddItem} deleteItem={handleControlDeleteItem} />
+					<TimelineControls currentTimelineKind="group" moveItem={handleControlMoveItem} addItem={handleControlAddItem} deleteItem={handleControlDeleteItem} />
 				</div>
 			</div>
-			<button onClick={handleAddNewGroup}>G</button>
-			<button onClick={handleAddNewTask}>T</button>
 			{props.currentTimeline.children.length ? (
 				<ul>
 					{props.currentTimeline.children.map((a, i) => {
@@ -125,7 +145,7 @@ const Component: NextPage<Props> = (props: Props) => {
 								}
 								{
 									a.kind === "task" ? (
-										<TaskTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parentGroup={props.currentTimeline} currentTimeline={a} updateChildrenOrder={updateChildrenOrder} />
+										<TaskTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parentGroup={props.currentTimeline} currentTimeline={a} updateChildrenOrder={updateChildrenOrder} addNextSiblingItem={addNextSiblingItem} />
 									) : <></>
 								}
 							</li>
