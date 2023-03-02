@@ -59,7 +59,7 @@ const Component: NextPage = () => {
 						<GroupsEditor />
 					</TabPanel>
 
-					<TabPanel className='setting-tab-item'>
+					<TabPanel className='setting-tab-item calendar'>
 						<dl className="inputs">
 							<dt>日付範囲</dt>
 							<dd className="range">
