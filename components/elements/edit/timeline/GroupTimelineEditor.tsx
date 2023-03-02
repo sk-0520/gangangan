@@ -10,6 +10,8 @@ import TaskTimelineEditor from "./TaskTimelineEditor";
 import * as Timeline from "../../../../models/data/setting/Timeline";
 import TimelineNumber from "./TimelineNumber";
 import TimelineControls from "./TimelineControls";
+import { MoveItemKind, AddItemKind } from "./TimelineControls";
+import * as throws from "../../../../models/core/throws";
 
 interface Props {
 	treeIndexes: Array<number>;
@@ -59,6 +61,40 @@ const Component: NextPage<Props> = (props: Props) => {
 		props.currentTimeline.children.push(item);
 	}
 
+	function handleControlMoveItem(kind: MoveItemKind) {
+		console.debug(kind);
+
+		const currentChildren = props.parent?.children ?? editContext.data.setting.timelines;
+		const currentIndex = currentChildren.findIndex(a => a === props.currentTimeline);
+		console.debug("index", currentIndex)
+
+		switch (kind) {
+			case "up":
+				if (currentIndex && 1 < currentChildren.length) {
+					const nextIndex = currentIndex - 1;
+					const tempItem = currentChildren[nextIndex];
+					currentChildren[nextIndex] = props.currentTimeline;
+					currentChildren[currentIndex] = tempItem;
+					setChildren(currentChildren);
+				}
+				break;
+
+			case "down":
+				if (props.parent) {
+				}
+				break;
+
+			default:
+				throw new throws.NotImplementedError();
+		}
+	}
+	function handleControlAddItem(kind: AddItemKind) {
+		console.debug(kind);
+	}
+	function handleControlDeleteItem() {
+		console.debug('delete');
+	}
+
 	return (
 		<div className='group'>
 			<div className='timeline-header' style={heightStyle}>
@@ -89,13 +125,7 @@ const Component: NextPage<Props> = (props: Props) => {
 					</span>
 				</div>
 				<div className="timeline-controls">
-					<TimelineControls moveItem={function (_: "up" | "down"): void {
-						throw new Error("Function not implemented.");
-					} } addItem={function (_: "group" | "task"): void {
-						throw new Error("Function not implemented.");
-					} } deleteItem={function (): void {
-						throw new Error("Function not implemented.");
-					} } />
+					<TimelineControls moveItem={handleControlMoveItem} addItem={handleControlAddItem} deleteItem={handleControlDeleteItem} />
 				</div>
 			</div>
 			<button onClick={handleAddNewGroup}>G</button>

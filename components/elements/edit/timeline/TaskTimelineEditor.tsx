@@ -8,6 +8,8 @@ import * as Timeline from "../../../../models/data/setting/Timeline";
 import TimelineNumber from "./TimelineNumber";
 import TimelineControls from "./TimelineControls";
 import * as time from "@/models/core/time";
+import { MoveItemKind, AddItemKind } from "./TimelineControls";
+
 
 interface Props {
 	parent: Timeline.GroupTimeline | null;
@@ -39,6 +41,16 @@ const Component: NextPage<Props> = (props: Props) => {
 	function handleChangeWorkload(n: number) {
 		setWorkload(n);
 		props.currentTimeline.workload = time.TimeSpan.fromDays(n).toString("readable");
+	}
+
+	function handleControlMoveItem(kind: MoveItemKind) {
+		console.debug(kind);
+	}
+	function handleControlAddItem(kind: AddItemKind) {
+		console.debug(kind);
+	}
+	function handleControlDeleteItem() {
+		console.debug('delete');
 	}
 
 	return (
@@ -79,13 +91,7 @@ const Component: NextPage<Props> = (props: Props) => {
 					</span>
 				</div>
 				<div className="timeline-controls">
-					<TimelineControls moveItem={function (_: "up" | "down"): void {
-						throw new Error("Function not implemented.");
-					}} addItem={function (_: "group" | "task"): void {
-						throw new Error("Function not implemented.");
-					}} deleteItem={function (): void {
-						throw new Error("Function not implemented.");
-					}} />
+					<TimelineControls moveItem={handleControlMoveItem} addItem={handleControlAddItem} deleteItem={handleControlDeleteItem} />
 				</div>
 			</div>
 		</div >
