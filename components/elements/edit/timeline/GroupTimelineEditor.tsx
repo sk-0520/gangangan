@@ -20,6 +20,7 @@ interface Props {
 	currentTimeline: Timeline.GroupTimeline;
 	updateChildrenOrder: (kind: MoveItemKind, currentTimeline: Timeline.Timeline) => void;
 	updateChildrenWorkload(): void;
+	updateChildrenProgress(): void;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -36,7 +37,7 @@ const Component: NextPage<Props> = (props: Props) => {
 	const [workload, setWorkload] = useState(Timelines.sumWorkloadByGroup(props.currentTimeline).totalDays);
 	//const [range, setRange] = useState(props.current.item.range);
 	//const [range, setRange] = useState(props.timeline.item.);
-	const [progress, setProgress] = useState(0);
+	const [progressPercent, setProgressPercent] = useState(Timelines.sumProgressByGroup(props.currentTimeline) * 100.0);
 	const [children, setChildren] = useState(props.currentTimeline.children);
 
 	function handleChangeSubject(s: string) {
@@ -70,13 +71,19 @@ const Component: NextPage<Props> = (props: Props) => {
 			item,
 		]);
 		props.currentTimeline.children.push(item);
+
 		handleUpdateChildrenWorkload();
+		handleUpdateChildrenProgress();
+
 		props.updateChildrenWorkload();
+		props.updateChildrenProgress();
 	}
 
 	function handleControlDeleteItem() {
 		console.debug('delete');
+
 		props.updateChildrenWorkload();
+		props.updateChildrenProgress();
 	}
 
 	function handleUpdateChildrenOrder(kind: MoveItemKind, currentTimeline: Timeline.Timeline) {
@@ -104,13 +111,23 @@ const Component: NextPage<Props> = (props: Props) => {
 
 		props.currentTimeline.children.splice(currentIndex + 1, 0, item);
 		setChildren([...props.currentTimeline.children]);
+
 		props.updateChildrenWorkload();
+		props.updateChildrenProgress();
 	}
 
 	function handleUpdateChildrenWorkload() {
 		const summary = Timelines.sumWorkloadByGroup(props.currentTimeline);
 		setWorkload(summary.totalDays);
+
 		props.updateChildrenWorkload();
+	}
+
+	function handleUpdateChildrenProgress() {
+		const progress = Timelines.sumProgressByGroup(props.currentTimeline);
+		setProgressPercent(progress * 100.0);
+
+		props.updateChildrenProgress();
 	}
 
 	return (
@@ -129,9 +146,8 @@ const Component: NextPage<Props> = (props: Props) => {
 				<div className='timeline-workload'>
 					<input
 						type="number"
-						step="0.00001"
+						step="0.01"
 						readOnly={true}
-						min={0}
 						value={workload}
 					/>
 				</div>
@@ -145,12 +161,20 @@ const Component: NextPage<Props> = (props: Props) => {
 				</div>
 				<div className='timeline-progress'>
 					<span>
-						<span>{progress}</span>
-						<span>%</span>
+						<input
+							type="number"
+							readOnly={true}
+							value={progressPercent}
+						/>
 					</span>
 				</div>
 				<div className="timeline-controls">
-					<TimelineControls currentTimelineKind="group" moveItem={handleControlMoveItem} addItem={handleControlAddItem} deleteItem={handleControlDeleteItem} />
+					<TimelineControls
+						currentTimelineKind="group"
+						moveItem={handleControlMoveItem}
+						addItem={handleControlAddItem}
+						deleteItem={handleControlDeleteItem}
+					/>
 				</div>
 			</div>
 			{props.currentTimeline.children.length ? (
@@ -160,12 +184,29 @@ const Component: NextPage<Props> = (props: Props) => {
 							<li key={a.id}>
 								{
 									a.kind === "group" ? (
-										<GroupTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parentGroup={props.currentTimeline} currentTimeline={a} updateChildrenOrder={handleUpdateChildrenOrder} updateChildrenWorkload={handleUpdateChildrenWorkload} />
+										<GroupTimelineEditor
+											treeIndexes={[...props.treeIndexes, props.currentIndex]}
+											currentIndex={i}
+											parentGroup={props.currentTimeline}
+											currentTimeline={a}
+											updateChildrenOrder={handleUpdateChildrenOrder}
+											updateChildrenWorkload={handleUpdateChildrenWorkload}
+											updateChildrenProgress={handleUpdateChildrenProgress}
+										/>
 									) : <></>
 								}
 								{
 									a.kind === "task" ? (
-										<TaskTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parentGroup={props.currentTimeline} currentTimeline={a} updateChildrenOrder={handleUpdateChildrenOrder} addNextSiblingItem={handleAddNextSiblingItem} updateChildrenWorkload={handleUpdateChildrenWorkload} />
+										<TaskTimelineEditor
+											treeIndexes={[...props.treeIndexes, props.currentIndex]}
+											currentIndex={i}
+											parentGroup={props.currentTimeline}
+											currentTimeline={a}
+											updateChildrenOrder={handleUpdateChildrenOrder}
+											addNextSiblingItem={handleAddNextSiblingItem}
+											updateChildrenWorkload={handleUpdateChildrenWorkload}
+											updateChildrenProgress={handleUpdateChildrenProgress}
+										/>
 									) : <></>
 								}
 							</li>

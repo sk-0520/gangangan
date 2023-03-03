@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 
-import { GroupTimeline, TaskTimeline, Timeline } from "./data/setting/Timeline";
+import { GroupTimeline, Progress, TaskTimeline, Timeline } from "./data/setting/Timeline";
 import * as time from "@/models/core/time";
 import { MoveItemKind } from "@/components/elements/edit/timeline/TimelineControls";
 import * as throws from "@/models/core/throws";
@@ -27,7 +27,7 @@ export default abstract class Timelines {
 			comment: "",
 			previous: [],
 			workload: workload.toString("readable"),
-			works: [],
+			progress: 0,
 		};
 
 		return item;
@@ -79,8 +79,8 @@ export default abstract class Timelines {
 
 		for (const timeline of timelines) {
 			if (timeline.kind === "group") {
-				const span = this.sumWorkloads(timeline.children)
-				workloads.push(span);
+				const summary = this.sumWorkloads(timeline.children)
+				workloads.push(summary);
 			} else if (timeline.kind === "task") {
 				const span = time.TimeSpan.parse(timeline.workload);
 				workloads.push(span);
@@ -99,4 +99,32 @@ export default abstract class Timelines {
 		return this.sumWorkloads(groupTimeline.children);
 	}
 
+	public static sumProgress(timelines: Array<GroupTimeline | TaskTimeline>): Progress {
+		const progress: Array<Progress> = [];
+
+		for (const timeline of timelines) {
+			if (timeline.kind === "group") {
+				const summary = this.sumProgress(timeline.children)
+				progress.push(summary);
+			} else if (timeline.kind === "task") {
+				progress.push(timeline.progress);
+			}
+		}
+
+		if(!progress.length) {
+			return 0;
+		}
+		console.debug(progress);
+
+		const sumProgress = progress.filter(a => !isNaN(a)).reduce(
+			(r, a) => r + a,
+			0.0
+		);
+
+		return sumProgress / progress.length;
+	}
+
+	public static sumProgressByGroup(groupTimeline: GroupTimeline): Progress {
+		return this.sumProgress(groupTimeline.children);
+	}
 }

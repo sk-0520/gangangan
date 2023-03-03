@@ -68,11 +68,6 @@ const Component: NextPage = () => {
 		setTimelines([...editContext.data.setting.timelines]);
 	}
 
-	// function handleUpdateChildrenWorkload() {
-	// 	const summary = Timelines.sumWorkloadByGroup(props.currentTimeline);
-	// }
-
-
 	return (
 		<div id='timelines'>
 			<>
@@ -90,7 +85,8 @@ const Component: NextPage = () => {
 												currentTimeline={a as Timeline.GroupTimeline/*TODO: 型ガード*/}
 												updateChildrenOrder={handleUpdateChildrenOrder}
 												updateChildrenWorkload={() => { /*nop*/ }}
-											/>
+												updateChildrenProgress={() => { /*nop*/ }}
+												/>
 										) : <></>
 									}
 									{
@@ -103,6 +99,7 @@ const Component: NextPage = () => {
 												updateChildrenOrder={handleUpdateChildrenOrder}
 												addNextSiblingItem={handleAddNextSiblingItem}
 												updateChildrenWorkload={() => { /*nop*/ }}
+												updateChildrenProgress={() => { /*nop*/ }}
 											/>
 										) : <></>
 									}

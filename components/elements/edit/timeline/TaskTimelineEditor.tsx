@@ -21,6 +21,7 @@ interface Props {
 	updateChildrenOrder: (kind: MoveItemKind, currentTimeline: Timeline.Timeline) => void;
 	addNextSiblingItem: (kind: Timeline.TimelineKind, currentTimeline: Timeline.Timeline) => void;
 	updateChildrenWorkload(): void;
+	updateChildrenProgress(): void;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -36,7 +37,7 @@ const Component: NextPage<Props> = (props: Props) => {
 	//const [kind, setKind] = useState(props.current.kind);
 	const [workload, setWorkload] = useState(time.TimeSpan.parse(props.currentTimeline.workload).totalDays);
 	//const [range, setRange] = useState(props.timeline.item.);
-	const [progress, setProgress] = useState(0);
+	const [progressPercent, setProgressPercent] = useState(props.currentTimeline.progress * 100.0);
 
 	function handleChangeSubject(s: string) {
 		setSubject(s);
@@ -46,17 +47,26 @@ const Component: NextPage<Props> = (props: Props) => {
 	function handleChangeWorkload(n: number) {
 		setWorkload(n);
 		props.currentTimeline.workload = time.TimeSpan.fromDays(n).toString("readable");
+
 		props.updateChildrenWorkload();
 	}
 
+	function handleChangeProgress(n: number) {
+		setProgressPercent(n);
+		props.currentTimeline.progress = n / 100.0;
+
+		props.updateChildrenProgress();
+	}
+
 	function handleControlMoveItem(kind: MoveItemKind) {
-		console.debug(kind);
 		props.updateChildrenOrder(kind, props.currentTimeline);
 	}
 
 	function handleControlAddItem(kind: Timeline.TimelineKind) {
 		props.addNextSiblingItem(kind, props.currentTimeline);
+
 		props.updateChildrenWorkload();
+		props.updateChildrenProgress();
 	}
 
 	function handleControlDeleteItem() {
@@ -95,10 +105,14 @@ const Component: NextPage<Props> = (props: Props) => {
 					<time>end</time>
 				</div>
 				<div className='timeline-progress'>
-					<span>
-						<span>{progress}</span>
-						<span>%</span>
-					</span>
+					<input
+						type="number"
+						min={0}
+						max={100}
+						step={1}
+						value={progressPercent}
+						onChange={ev => handleChangeProgress(ev.target.valueAsNumber)}
+					/>
 				</div>
 				<div className="timeline-controls">
 					<TimelineControls currentTimelineKind="task" moveItem={handleControlMoveItem} addItem={handleControlAddItem} deleteItem={handleControlDeleteItem} />

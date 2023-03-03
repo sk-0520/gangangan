@@ -6,7 +6,7 @@
 	$timeline-header-resource-width: 8ch;
 	$timeline-header-from-width: 8ch;
 	$timeline-header-to-width: 8ch;
-	$timeline-header-progress-width: 4ch;
+	$timeline-header-progress-width: 5ch;
 	$timeline-header-controls-item-width: 3ch;
 
 	$app-header-height: 80px;
@@ -45,6 +45,10 @@
 		}
 		.timeline-progress {
 			width: $timeline-header-progress-width;
+
+			input[type="number"] {
+				width: 100%;
+			}
 		}
 	}
 

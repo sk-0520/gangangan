@@ -3,7 +3,7 @@ import * as Member from "./Member";
 import * as Version from "./Version";
 
 export type TimelineId = string;
-
+export type Progress = number;
 export type TimelineKind =
 	"group"
 	|
@@ -38,17 +38,11 @@ export interface TaskTimelineWorkHistory {
 	more: ISO8601.Time;
 }
 
-export interface TaskTimelineWork {
-	member: Member.MemberId;
-	state: TaskTimelineWorkState;
-	progress: TaskTimelineWorkProgress;
-}
-
 export interface TaskTimeline extends Timeline {
 	kind: "task";
 	static?: ISO8601.DateTime;
 	previous: Array<TimelineId>;
 	workload: ISO8601.Time;
-	works: Array<TaskTimelineWork>;
+	progress: Progress;
 }
 
