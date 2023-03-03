@@ -1,5 +1,6 @@
 #timeline {
-	$timeline-header-id-width: 10ch;
+	//$timeline-header-id-width: 10ch;
+	$timeline-header-id-width: 18ch;
 	$timeline-header-subject-width: 20ch;
 	$timeline-header-workload-width: 7ch;
 	$timeline-header-resource-width: 8ch;
@@ -118,15 +119,9 @@
 			}
 		}
 
-		.group {
-			& > .timeline-header {
-				background-color: yellowgreen;
-			}
-		}
-
 		.task {
 			& > .timeline-header {
-				background-color: lime;
+				background-color: olivedrab;
 			}
 		}
 	}

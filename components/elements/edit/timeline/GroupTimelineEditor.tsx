@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useContext, useState } from "react";
+import { CSSProperties, useContext, useState } from "react";
 
 import Timelines from "@/models/Timelines";
 import { EditContext } from "@/models/data/context/EditContext";
@@ -11,6 +11,7 @@ import * as Timeline from "../../../../models/data/setting/Timeline";
 import TimelineNumber from "./TimelineNumber";
 import TimelineControls, { MoveItemKind } from "./TimelineControls";
 import * as throws from "../../../../models/core/throws";
+import { Theme } from "@/models/data/setting/Theme";
 
 interface Props {
 	treeIndexes: Array<number>;
@@ -24,9 +25,10 @@ const Component: NextPage<Props> = (props: Props) => {
 	const locale = useLocale();
 	const editContext = useContext(EditContext);
 
-	const heightStyle = {
+	const heightStyle: CSSProperties = {
 		maxHeight: editContext.design.cell.maxHeight,
 		minHeight: editContext.design.cell.minHeight,
+		...getGroupStyles(props.treeIndexes.length, editContext.data.setting.theme)
 	};
 
 	const [subject, setSubject] = useState(props.currentTimeline.subject);
@@ -158,3 +160,15 @@ const Component: NextPage<Props> = (props: Props) => {
 };
 
 export default Component;
+
+function getGroupStyles(level: number, theme: Readonly<Theme>): CSSProperties {
+	if (theme.groups.length < level) {
+		return {};
+	}
+
+	const color = theme.groups[level];
+
+	return {
+		backgroundColor: color,
+	};
+}
