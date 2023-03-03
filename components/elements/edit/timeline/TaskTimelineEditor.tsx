@@ -20,6 +20,7 @@ interface Props {
 	currentTimeline: Timeline.TaskTimeline;
 	updateChildrenOrder: (kind: MoveItemKind, currentTimeline: Timeline.Timeline) => void;
 	addNextSiblingItem: (kind: Timeline.TimelineKind, currentTimeline: Timeline.Timeline) => void;
+	updateChildrenWorkload(): void;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -45,6 +46,7 @@ const Component: NextPage<Props> = (props: Props) => {
 	function handleChangeWorkload(n: number) {
 		setWorkload(n);
 		props.currentTimeline.workload = time.TimeSpan.fromDays(n).toString("readable");
+		props.updateChildrenWorkload();
 	}
 
 	function handleControlMoveItem(kind: MoveItemKind) {
@@ -54,6 +56,7 @@ const Component: NextPage<Props> = (props: Props) => {
 
 	function handleControlAddItem(kind: Timeline.TimelineKind) {
 		props.addNextSiblingItem(kind, props.currentTimeline);
+		props.updateChildrenWorkload();
 	}
 
 	function handleControlDeleteItem() {

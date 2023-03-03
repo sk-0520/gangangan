@@ -73,4 +73,30 @@ export default abstract class Timelines {
 
 		return false;
 	}
+
+	public static sumWorkloads(timelines: Array<GroupTimeline | TaskTimeline>): time.TimeSpan {
+		const workloads: Array<time.TimeSpan> = [];
+
+		for (const timeline of timelines) {
+			if (timeline.kind === "group") {
+				const span = this.sumWorkloads(timeline.children)
+				workloads.push(span);
+			} else if (timeline.kind === "task") {
+				const span = time.TimeSpan.parse(timeline.workload);
+				workloads.push(span);
+			}
+		}
+
+		const sumMs = workloads.reduce(
+			(r, a) => r + a.totalMilliseconds,
+			0
+		);
+
+		return time.TimeSpan.fromMilliseconds(sumMs);
+	}
+
+	public static sumWorkloadByGroup(groupTimeline: GroupTimeline): time.TimeSpan {
+		return this.sumWorkloads(groupTimeline.children);
+	}
+
 }

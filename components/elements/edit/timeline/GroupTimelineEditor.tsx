@@ -19,6 +19,7 @@ interface Props {
 	currentIndex: number;
 	currentTimeline: Timeline.GroupTimeline;
 	updateChildrenOrder: (kind: MoveItemKind, currentTimeline: Timeline.Timeline) => void;
+	updateChildrenWorkload(): void;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -32,7 +33,7 @@ const Component: NextPage<Props> = (props: Props) => {
 	};
 
 	const [subject, setSubject] = useState(props.currentTimeline.subject);
-	//const [kind, setKind] = useState(props.current.kind);
+	const [workload, setWorkload] = useState(Timelines.sumWorkloadByGroup(props.currentTimeline).totalDays);
 	//const [range, setRange] = useState(props.current.item.range);
 	//const [range, setRange] = useState(props.timeline.item.);
 	const [progress, setProgress] = useState(0);
@@ -69,10 +70,13 @@ const Component: NextPage<Props> = (props: Props) => {
 			item,
 		]);
 		props.currentTimeline.children.push(item);
+		handleUpdateChildrenWorkload();
+		props.updateChildrenWorkload();
 	}
 
 	function handleControlDeleteItem() {
 		console.debug('delete');
+		props.updateChildrenWorkload();
 	}
 
 	function handleUpdateChildrenOrder(kind: MoveItemKind, currentTimeline: Timeline.Timeline) {
@@ -100,6 +104,13 @@ const Component: NextPage<Props> = (props: Props) => {
 
 		props.currentTimeline.children.splice(currentIndex + 1, 0, item);
 		setChildren([...props.currentTimeline.children]);
+		props.updateChildrenWorkload();
+	}
+
+	function handleUpdateChildrenWorkload() {
+		const summary = Timelines.sumWorkloadByGroup(props.currentTimeline);
+		setWorkload(summary.totalDays);
+		props.updateChildrenWorkload();
 	}
 
 	return (
@@ -116,6 +127,13 @@ const Component: NextPage<Props> = (props: Props) => {
 					/>
 				</div>
 				<div className='timeline-workload'>
+					<input
+						type="number"
+						step="0.00001"
+						readOnly={true}
+						min={0}
+						value={workload}
+					/>
 				</div>
 				<div className='timeline-resource'>
 				</div>
@@ -142,12 +160,12 @@ const Component: NextPage<Props> = (props: Props) => {
 							<li key={a.id}>
 								{
 									a.kind === "group" ? (
-										<GroupTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parentGroup={props.currentTimeline} currentTimeline={a} updateChildrenOrder={handleUpdateChildrenOrder} />
+										<GroupTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parentGroup={props.currentTimeline} currentTimeline={a} updateChildrenOrder={handleUpdateChildrenOrder} updateChildrenWorkload={handleUpdateChildrenWorkload} />
 									) : <></>
 								}
 								{
 									a.kind === "task" ? (
-										<TaskTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parentGroup={props.currentTimeline} currentTimeline={a} updateChildrenOrder={handleUpdateChildrenOrder} addNextSiblingItem={handleAddNextSiblingItem} />
+										<TaskTimelineEditor treeIndexes={[...props.treeIndexes, props.currentIndex]} currentIndex={i} parentGroup={props.currentTimeline} currentTimeline={a} updateChildrenOrder={handleUpdateChildrenOrder} addNextSiblingItem={handleAddNextSiblingItem} updateChildrenWorkload={handleUpdateChildrenWorkload} />
 									) : <></>
 								}
 							</li>

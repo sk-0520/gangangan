@@ -68,6 +68,11 @@ const Component: NextPage = () => {
 		setTimelines([...editContext.data.setting.timelines]);
 	}
 
+	// function handleUpdateChildrenWorkload() {
+	// 	const summary = Timelines.sumWorkloadByGroup(props.currentTimeline);
+	// }
+
+
 	return (
 		<div id='timelines'>
 			<>
@@ -78,12 +83,27 @@ const Component: NextPage = () => {
 								<li key={a.id}>
 									{
 										a.kind === "group" ? (
-											<GroupTimelineEditor treeIndexes={[]} currentIndex={i} parentGroup={null} currentTimeline={a as Timeline.GroupTimeline/*TODO: 型ガード*/} updateChildrenOrder={handleUpdateChildrenOrder} />
+											<GroupTimelineEditor
+												treeIndexes={[]}
+												currentIndex={i}
+												parentGroup={null}
+												currentTimeline={a as Timeline.GroupTimeline/*TODO: 型ガード*/}
+												updateChildrenOrder={handleUpdateChildrenOrder}
+												updateChildrenWorkload={() => { /*nop*/ }}
+											/>
 										) : <></>
 									}
 									{
 										a.kind === "task" ? (
-											<TaskTimelineEditor treeIndexes={[]} currentIndex={i} parentGroup={null} currentTimeline={a as Timeline.TaskTimeline/*TODO: 型ガード*/} updateChildrenOrder={handleUpdateChildrenOrder} addNextSiblingItem={handleAddNextSiblingItem} />
+											<TaskTimelineEditor
+												treeIndexes={[]}
+												currentIndex={i}
+												parentGroup={null}
+												currentTimeline={a as Timeline.TaskTimeline/*TODO: 型ガード*/}
+												updateChildrenOrder={handleUpdateChildrenOrder}
+												addNextSiblingItem={handleAddNextSiblingItem}
+												updateChildrenWorkload={() => { /*nop*/ }}
+											/>
 										) : <></>
 									}
 								</li>
