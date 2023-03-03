@@ -41,10 +41,31 @@ const Component: NextPage = () => {
 		editContext.data.setting.timelines.push(item);
 	}
 
-	function updateChildrenOrder(kind: MoveItemKind, currentTimeline: Timeline.Timeline) {
+	function handleUpdateChildrenOrder(kind: MoveItemKind, currentTimeline: Timeline.Timeline) {
 		if (Timelines.moveTimelineOrder(timelines, kind, currentTimeline)) {
 			setTimelines(editContext.data.setting.timelines = [...timelines]);
 		}
+	}
+
+	function handleAddNextSiblingItem(kind: Timeline.TimelineKind, currentTimeline: Timeline.Timeline) {
+		const currentIndex = timelines.findIndex(a => a === currentTimeline);
+
+		let item: Timeline.GroupTimeline | Timeline.TaskTimeline | null = null;
+		switch (kind) {
+			case "group":
+				item = Timelines.createNewGroup();
+				break;
+
+			case "task":
+				item = Timelines.createNewTask();
+				break;
+
+			default:
+				throw new throws.NotImplementedError();
+		}
+
+		editContext.data.setting.timelines.splice(currentIndex + 1, 0, item);
+		setTimelines([...editContext.data.setting.timelines]);
 	}
 
 	return (
@@ -57,12 +78,12 @@ const Component: NextPage = () => {
 								<li key={a.id}>
 									{
 										a.kind === "group" ? (
-											<GroupTimelineEditor treeIndexes={[]} currentIndex={i} parentGroup={null} currentTimeline={a as Timeline.GroupTimeline/*TODO: 型ガード*/} updateChildrenOrder={updateChildrenOrder} />
+											<GroupTimelineEditor treeIndexes={[]} currentIndex={i} parentGroup={null} currentTimeline={a as Timeline.GroupTimeline/*TODO: 型ガード*/} updateChildrenOrder={handleUpdateChildrenOrder} />
 										) : <></>
 									}
 									{
 										a.kind === "task" ? (
-											<TaskTimelineEditor treeIndexes={[]} currentIndex={i} parentGroup={null} currentTimeline={a as Timeline.TaskTimeline/*TODO: 型ガード*/} updateChildrenOrder={updateChildrenOrder} />
+											<TaskTimelineEditor treeIndexes={[]} currentIndex={i} parentGroup={null} currentTimeline={a as Timeline.TaskTimeline/*TODO: 型ガード*/} updateChildrenOrder={handleUpdateChildrenOrder} addNextSiblingItem={handleAddNextSiblingItem} />
 										) : <></>
 									}
 								</li>
