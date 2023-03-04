@@ -68,6 +68,12 @@ const Component: NextPage = () => {
 		setTimelines([...editContext.data.setting.timelines]);
 	}
 
+	function handleDeleteChildren(currentTimeline: Timeline.Timeline) {
+		const nextTimelines = editContext.data.setting.timelines.filter(a => a !== currentTimeline);
+
+		setTimelines(editContext.data.setting.timelines = nextTimelines);
+	}
+
 	return (
 		<div id='timelines'>
 			<>
@@ -86,7 +92,8 @@ const Component: NextPage = () => {
 												updateChildrenOrder={handleUpdateChildrenOrder}
 												updateChildrenWorkload={() => { /*nop*/ }}
 												updateChildrenProgress={() => { /*nop*/ }}
-												/>
+												callbackDeleteChildren={handleDeleteChildren}
+											/>
 										) : <></>
 									}
 									{
@@ -100,6 +107,7 @@ const Component: NextPage = () => {
 												addNextSiblingItem={handleAddNextSiblingItem}
 												updateChildrenWorkload={() => { /*nop*/ }}
 												updateChildrenProgress={() => { /*nop*/ }}
+												callbackDeleteChildren={handleDeleteChildren}
 											/>
 										) : <></>
 									}

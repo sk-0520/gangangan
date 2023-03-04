@@ -21,6 +21,7 @@ interface Props {
 	updateChildrenOrder: (kind: MoveItemKind, currentTimeline: Timeline.Timeline) => void;
 	updateChildrenWorkload(): void;
 	updateChildrenProgress(): void;
+	callbackDeleteChildren(currentTimeline: Timeline.Timeline): void;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -82,8 +83,7 @@ const Component: NextPage<Props> = (props: Props) => {
 	function handleControlDeleteItem() {
 		console.debug('delete');
 
-		props.updateChildrenWorkload();
-		props.updateChildrenProgress();
+		props.callbackDeleteChildren(props.currentTimeline);
 	}
 
 	function handleUpdateChildrenOrder(kind: MoveItemKind, currentTimeline: Timeline.Timeline) {
@@ -128,6 +128,10 @@ const Component: NextPage<Props> = (props: Props) => {
 		setProgressPercent(progress * 100.0);
 
 		props.updateChildrenProgress();
+	}
+
+	function handleDeleteChildren(currentTimeline: Timeline.Timeline) {
+		alert(JSON.stringify(currentTimeline))
 	}
 
 	return (
@@ -192,6 +196,7 @@ const Component: NextPage<Props> = (props: Props) => {
 											updateChildrenOrder={handleUpdateChildrenOrder}
 											updateChildrenWorkload={handleUpdateChildrenWorkload}
 											updateChildrenProgress={handleUpdateChildrenProgress}
+											callbackDeleteChildren={handleDeleteChildren}
 										/>
 									) : <></>
 								}
@@ -206,6 +211,7 @@ const Component: NextPage<Props> = (props: Props) => {
 											addNextSiblingItem={handleAddNextSiblingItem}
 											updateChildrenWorkload={handleUpdateChildrenWorkload}
 											updateChildrenProgress={handleUpdateChildrenProgress}
+											callbackDeleteChildren={handleDeleteChildren}
 										/>
 									) : <></>
 								}

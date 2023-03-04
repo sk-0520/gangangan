@@ -22,6 +22,7 @@ interface Props {
 	addNextSiblingItem: (kind: Timeline.TimelineKind, currentTimeline: Timeline.Timeline) => void;
 	updateChildrenWorkload(): void;
 	updateChildrenProgress(): void;
+	callbackDeleteChildren(currentTimeline: Timeline.Timeline): void;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -71,6 +72,8 @@ const Component: NextPage<Props> = (props: Props) => {
 
 	function handleControlDeleteItem() {
 		console.debug('delete');
+
+		props.callbackDeleteChildren(props.currentTimeline);
 	}
 
 	return (
