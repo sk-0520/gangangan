@@ -71,8 +71,6 @@ const Component: NextPage<Props> = (props: Props) => {
 	}
 
 	function handleControlDeleteItem() {
-		console.debug('delete');
-
 		props.callbackDeleteChildren(props.currentTimeline);
 	}
 
@@ -118,7 +116,12 @@ const Component: NextPage<Props> = (props: Props) => {
 					/>
 				</div>
 				<div className="timeline-controls">
-					<TimelineControls currentTimelineKind="task" moveItem={handleControlMoveItem} addItem={handleControlAddItem} deleteItem={handleControlDeleteItem} />
+					<TimelineControls
+						currentTimelineKind="task"
+						moveItem={handleControlMoveItem}
+						addItem={handleControlAddItem}
+						deleteItem={handleControlDeleteItem}
+					/>
 				</div>
 			</div>
 		</div >

@@ -81,8 +81,6 @@ const Component: NextPage<Props> = (props: Props) => {
 	}
 
 	function handleControlDeleteItem() {
-		console.debug('delete');
-
 		props.callbackDeleteChildren(props.currentTimeline);
 	}
 
@@ -131,7 +129,14 @@ const Component: NextPage<Props> = (props: Props) => {
 	}
 
 	function handleDeleteChildren(currentTimeline: Timeline.Timeline) {
-		alert(JSON.stringify(currentTimeline))
+		const nextTimelines = children.filter(a => a.id !== currentTimeline.id);
+		setChildren(props.currentTimeline.children = nextTimelines);
+
+		handleUpdateChildrenWorkload();
+		handleUpdateChildrenProgress();
+
+		props.updateChildrenWorkload();
+		props.updateChildrenProgress();
 	}
 
 	return (
