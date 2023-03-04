@@ -89,10 +89,10 @@ const Component: NextPage = () => {
 												currentIndex={i}
 												parentGroup={null}
 												currentTimeline={a as Timeline.GroupTimeline/*TODO: 型ガード*/}
-												updateChildrenOrder={handleUpdateChildrenOrder}
-												updateChildrenWorkload={() => { /*nop*/ }}
-												updateChildrenProgress={() => { /*nop*/ }}
-												callbackDeleteChildren={handleDeleteChildren}
+												callbackRefreshChildrenOrder={handleUpdateChildrenOrder}
+												callbackRefreshChildrenWorkload={() => { /*nop*/ }}
+												callbackRefreshChildrenProgress={() => { /*nop*/ }}
+												callbackDeleteChildTimeline={handleDeleteChildren}
 											/>
 										) : <></>
 									}
@@ -103,11 +103,11 @@ const Component: NextPage = () => {
 												currentIndex={i}
 												parentGroup={null}
 												currentTimeline={a as Timeline.TaskTimeline/*TODO: 型ガード*/}
-												updateChildrenOrder={handleUpdateChildrenOrder}
-												addNextSiblingItem={handleAddNextSiblingItem}
-												updateChildrenWorkload={() => { /*nop*/ }}
-												updateChildrenProgress={() => { /*nop*/ }}
-												callbackDeleteChildren={handleDeleteChildren}
+												callbackRefreshChildrenOrder={handleUpdateChildrenOrder}
+												callbackAddNextSiblingItem={handleAddNextSiblingItem}
+												callbackRefreshChildrenWorkload={() => { /*nop*/ }}
+												callbackRefreshChildrenProgress={() => { /*nop*/ }}
+												callbackDeleteChildTimeline={handleDeleteChildren}
 											/>
 										) : <></>
 									}

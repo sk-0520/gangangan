@@ -18,10 +18,10 @@ interface Props {
 	parentGroup: Timeline.GroupTimeline | null;
 	currentIndex: number;
 	currentTimeline: Timeline.GroupTimeline;
-	updateChildrenOrder: (kind: MoveItemKind, currentTimeline: Timeline.Timeline) => void;
-	updateChildrenWorkload(): void;
-	updateChildrenProgress(): void;
-	callbackDeleteChildren(currentTimeline: Timeline.Timeline): void;
+	callbackRefreshChildrenOrder: (kind: MoveItemKind, currentTimeline: Timeline.Timeline) => void;
+	callbackRefreshChildrenWorkload(): void;
+	callbackRefreshChildrenProgress(): void;
+	callbackDeleteChildTimeline(currentTimeline: Timeline.Timeline): void;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -47,7 +47,7 @@ const Component: NextPage<Props> = (props: Props) => {
 	}
 
 	function handleControlMoveItem(kind: MoveItemKind) {
-		props.updateChildrenOrder(kind, props.currentTimeline);
+		props.callbackRefreshChildrenOrder(kind, props.currentTimeline);
 	}
 
 	function handleControlAddItem(kind: Timeline.TimelineKind) {
@@ -76,12 +76,12 @@ const Component: NextPage<Props> = (props: Props) => {
 		handleUpdateChildrenWorkload();
 		handleUpdateChildrenProgress();
 
-		props.updateChildrenWorkload();
-		props.updateChildrenProgress();
+		props.callbackRefreshChildrenWorkload();
+		props.callbackRefreshChildrenProgress();
 	}
 
 	function handleControlDeleteItem() {
-		props.callbackDeleteChildren(props.currentTimeline);
+		props.callbackDeleteChildTimeline(props.currentTimeline);
 	}
 
 	function handleUpdateChildrenOrder(kind: MoveItemKind, currentTimeline: Timeline.Timeline) {
@@ -110,22 +110,22 @@ const Component: NextPage<Props> = (props: Props) => {
 		props.currentTimeline.children.splice(currentIndex + 1, 0, item);
 		setChildren([...props.currentTimeline.children]);
 
-		props.updateChildrenWorkload();
-		props.updateChildrenProgress();
+		props.callbackRefreshChildrenWorkload();
+		props.callbackRefreshChildrenProgress();
 	}
 
 	function handleUpdateChildrenWorkload() {
 		const summary = Timelines.sumWorkloadByGroup(props.currentTimeline);
 		setWorkload(summary.totalDays);
 
-		props.updateChildrenWorkload();
+		props.callbackRefreshChildrenWorkload();
 	}
 
 	function handleUpdateChildrenProgress() {
 		const progress = Timelines.sumProgressByGroup(props.currentTimeline);
 		setProgressPercent(progress * 100.0);
 
-		props.updateChildrenProgress();
+		props.callbackRefreshChildrenProgress();
 	}
 
 	function handleDeleteChildren(currentTimeline: Timeline.Timeline) {
@@ -135,8 +135,8 @@ const Component: NextPage<Props> = (props: Props) => {
 		handleUpdateChildrenWorkload();
 		handleUpdateChildrenProgress();
 
-		props.updateChildrenWorkload();
-		props.updateChildrenProgress();
+		props.callbackRefreshChildrenWorkload();
+		props.callbackRefreshChildrenProgress();
 	}
 
 	return (
@@ -198,10 +198,10 @@ const Component: NextPage<Props> = (props: Props) => {
 											currentIndex={i}
 											parentGroup={props.currentTimeline}
 											currentTimeline={a}
-											updateChildrenOrder={handleUpdateChildrenOrder}
-											updateChildrenWorkload={handleUpdateChildrenWorkload}
-											updateChildrenProgress={handleUpdateChildrenProgress}
-											callbackDeleteChildren={handleDeleteChildren}
+											callbackRefreshChildrenOrder={handleUpdateChildrenOrder}
+											callbackRefreshChildrenWorkload={handleUpdateChildrenWorkload}
+											callbackRefreshChildrenProgress={handleUpdateChildrenProgress}
+											callbackDeleteChildTimeline={handleDeleteChildren}
 										/>
 									) : <></>
 								}
@@ -212,11 +212,11 @@ const Component: NextPage<Props> = (props: Props) => {
 											currentIndex={i}
 											parentGroup={props.currentTimeline}
 											currentTimeline={a}
-											updateChildrenOrder={handleUpdateChildrenOrder}
-											addNextSiblingItem={handleAddNextSiblingItem}
-											updateChildrenWorkload={handleUpdateChildrenWorkload}
-											updateChildrenProgress={handleUpdateChildrenProgress}
-											callbackDeleteChildren={handleDeleteChildren}
+											callbackRefreshChildrenOrder={handleUpdateChildrenOrder}
+											callbackAddNextSiblingItem={handleAddNextSiblingItem}
+											callbackRefreshChildrenWorkload={handleUpdateChildrenWorkload}
+											callbackRefreshChildrenProgress={handleUpdateChildrenProgress}
+											callbackDeleteChildTimeline={handleDeleteChildren}
 										/>
 									) : <></>
 								}

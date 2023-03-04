@@ -18,11 +18,11 @@ interface Props {
 	treeIndexes: Array<number>;
 	currentIndex: number;
 	currentTimeline: Timeline.TaskTimeline;
-	updateChildrenOrder: (kind: MoveItemKind, currentTimeline: Timeline.Timeline) => void;
-	addNextSiblingItem: (kind: Timeline.TimelineKind, currentTimeline: Timeline.Timeline) => void;
-	updateChildrenWorkload(): void;
-	updateChildrenProgress(): void;
-	callbackDeleteChildren(currentTimeline: Timeline.Timeline): void;
+	callbackRefreshChildrenOrder: (kind: MoveItemKind, currentTimeline: Timeline.Timeline) => void;
+	callbackAddNextSiblingItem: (kind: Timeline.TimelineKind, currentTimeline: Timeline.Timeline) => void;
+	callbackRefreshChildrenWorkload(): void;
+	callbackRefreshChildrenProgress(): void;
+	callbackDeleteChildTimeline(currentTimeline: Timeline.Timeline): void;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -49,29 +49,29 @@ const Component: NextPage<Props> = (props: Props) => {
 		setWorkload(n);
 		props.currentTimeline.workload = time.TimeSpan.fromDays(n).toString("readable");
 
-		props.updateChildrenWorkload();
+		props.callbackRefreshChildrenWorkload();
 	}
 
 	function handleChangeProgress(n: number) {
 		setProgressPercent(n);
 		props.currentTimeline.progress = n / 100.0;
 
-		props.updateChildrenProgress();
+		props.callbackRefreshChildrenProgress();
 	}
 
 	function handleControlMoveItem(kind: MoveItemKind) {
-		props.updateChildrenOrder(kind, props.currentTimeline);
+		props.callbackRefreshChildrenOrder(kind, props.currentTimeline);
 	}
 
 	function handleControlAddItem(kind: Timeline.TimelineKind) {
-		props.addNextSiblingItem(kind, props.currentTimeline);
+		props.callbackAddNextSiblingItem(kind, props.currentTimeline);
 
-		props.updateChildrenWorkload();
-		props.updateChildrenProgress();
+		props.callbackRefreshChildrenWorkload();
+		props.callbackRefreshChildrenProgress();
 	}
 
 	function handleControlDeleteItem() {
-		props.callbackDeleteChildren(props.currentTimeline);
+		props.callbackDeleteChildTimeline(props.currentTimeline);
 	}
 
 	return (
