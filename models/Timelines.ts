@@ -27,6 +27,7 @@ export default abstract class Timelines {
 			comment: "",
 			previous: [],
 			workload: workload.toString("readable"),
+			memberId: '',
 			progress: 0,
 		};
 
@@ -111,7 +112,7 @@ export default abstract class Timelines {
 			}
 		}
 
-		if(!progress.length) {
+		if (!progress.length) {
 			return 0;
 		}
 		console.debug(progress);

@@ -11,6 +11,8 @@ import * as time from "@/models/core/time";
 import { MoveItemKind } from "./TimelineControls";
 import Timelines from "@/models/Timelines";
 import * as throws from "../../../../models/core/throws";
+import MemberList from "./MemberList";
+import { MemberId } from "@/models/data/setting/Member";
 
 
 interface Props {
@@ -37,7 +39,7 @@ const Component: NextPage<Props> = (props: Props) => {
 	const [subject, setSubject] = useState(props.currentTimeline.subject);
 	//const [kind, setKind] = useState(props.current.kind);
 	const [workload, setWorkload] = useState(time.TimeSpan.parse(props.currentTimeline.workload).totalDays);
-	//const [range, setRange] = useState(props.timeline.item.);
+	const [memberId, setMemberId] = useState(props.currentTimeline.memberId);
 	const [progressPercent, setProgressPercent] = useState(props.currentTimeline.progress * 100.0);
 
 	function handleChangeSubject(s: string) {
@@ -74,6 +76,11 @@ const Component: NextPage<Props> = (props: Props) => {
 		props.callbackDeleteChildTimeline(props.currentTimeline);
 	}
 
+	function handleChangeMember(memberId: MemberId): void {
+		setMemberId(memberId);
+		props.currentTimeline.memberId = memberId;
+	}
+
 	return (
 		<div className='task' style={heightStyle}>
 			<div className='timeline-header'>
@@ -97,7 +104,10 @@ const Component: NextPage<Props> = (props: Props) => {
 					/>
 				</div>
 				<div className='timeline-resource'>
-					<button>list</button>
+					<MemberList
+						selectedMemberId={memberId}
+						callbackChangeMember={handleChangeMember}
+					/>
 				</div>
 				<div className='timeline-from'>
 					<time>start</time>

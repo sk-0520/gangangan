@@ -40,6 +40,7 @@ export interface TaskTimelineWorkHistory {
 
 export interface TaskTimeline extends Timeline {
 	kind: "task";
+	memberId: Member.MemberId;
 	static?: ISO8601.DateTime;
 	previous: Array<TimelineId>;
 	workload: ISO8601.Time;
