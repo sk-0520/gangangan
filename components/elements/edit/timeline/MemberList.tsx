@@ -6,7 +6,7 @@ import { Member, MemberId } from "@/models/data/setting/Member";
 
 interface Props {
 	selectedMemberId: MemberId;
-	callbackChangeMember(userId: MemberId): void;
+	callbackChangeMember(memberId: MemberId, memberName: string): void;
 }
 
 const Component: NextPage<Props> = (props: Props) => {
@@ -22,6 +22,7 @@ const Component: NextPage<Props> = (props: Props) => {
 				return (
 					<option
 						key={a.id}
+						value={a.id}
 						selected={selectedMemberId === a.id}
 					>
 						{a.name}
@@ -32,7 +33,11 @@ const Component: NextPage<Props> = (props: Props) => {
 	}
 
 	function handleChangeOption(memberId: MemberId) {
-		props.callbackChangeMember(memberId);
+		const member = groups
+			.flatMap(a => a.members)
+			.find(a => a.id === memberId)
+			;
+		props.callbackChangeMember(member?.id ?? "", member?.name ?? "");
 	}
 
 	return (
