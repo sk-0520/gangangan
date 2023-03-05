@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { EditContext } from "@/models/data/context/EditContext";
+import Link from "next/link";
 
 const Component: NextPage = () => {
 	const editContext = useContext(EditContext);
@@ -84,6 +85,21 @@ const Component: NextPage = () => {
 					<textarea
 						value={settingJson}
 					/>
+				</dd>
+
+				<dt>さいなら</dt>
+				<dd>
+					<ul>
+						<li>
+							<Link href="/">トップ</Link>
+						</li>
+						<li>
+							<Link href="/new">新規</Link>
+						</li>
+						<li>
+							<Link href="/load">読み込み</Link>
+						</li>
+					</ul>
 				</dd>
 			</dl>
 		</>

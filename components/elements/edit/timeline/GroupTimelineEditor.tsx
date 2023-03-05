@@ -142,6 +142,9 @@ const Component: NextPage<Props> = (props: Props) => {
 	return (
 		<div className='group'>
 			<div className='timeline-header' style={heightStyle}>
+				<div className="timeline-kind">
+					📂
+				</div>
 				<div className='timeline-id' title={props.currentTimeline.id}>
 					<TimelineNumber treeIndexes={props.treeIndexes} currentIndex={props.currentIndex} />
 				</div>

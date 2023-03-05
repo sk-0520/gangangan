@@ -10,6 +10,7 @@ const Component: NextPage = () => {
 		<div id='hidariue'>
 			<h1>{editContext.data.setting.name}</h1>
 			<div className='timeline-header'>
+				<div className="timeline-kind">*</div>
 				<div className='timeline-id'>ID</div>
 				<div className='timeline-subject'>作業</div>
 				<div className='timeline-workload'>工数</div>

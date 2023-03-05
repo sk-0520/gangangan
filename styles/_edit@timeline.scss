@@ -1,4 +1,5 @@
 #timeline {
+	$timeline-header-kind-width: 3ch;
 	//$timeline-header-id-width: 10ch;
 	$timeline-header-id-width: 18ch;
 	$timeline-header-subject-width: 20ch;
@@ -20,6 +21,9 @@
 		flex-wrap: nowrap;
 		justify-content: center;
 
+		.timeline-kind {
+			width: $timeline-header-kind-width;
+		}
 		.timeline-id {
 			width: $timeline-header-id-width;
 			//padding-left: 0.5ch;
