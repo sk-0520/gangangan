@@ -7,12 +7,12 @@ import * as Goto from "@/models/Goto";
 import { EditData } from "@/models/data/EditData";
 import * as Setting from "@/models/data/setting/Setting";
 
-interface LoadInput {
+interface Input {
 	files: FileList;
 }
 
-const Load: NextPage = () => {
-	const { register, handleSubmit, } = useForm<LoadInput>();
+const Page: NextPage = () => {
+	const { register, handleSubmit, } = useForm<Input>();
 	const router = useRouter();
 
 	return (
@@ -29,9 +29,9 @@ const Load: NextPage = () => {
 	);
 };
 
-export default Load;
+export default Page;
 
-async function onSubmit(data: LoadInput, router: NextRouter) {
+async function onSubmit(data: Input, router: NextRouter) {
 	console.log(data);
 	const file = data.files[0];
 

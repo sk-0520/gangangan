@@ -9,6 +9,6 @@ export interface Setting {
 	calendar: Calendar;
 	theme: Theme;
 	groups: Array<Group>;
-	timelines: Array<Timeline.Timeline>;
+	timelines: Array<Timeline.GroupTimeline | Timeline.TaskTimeline>;
 	versions: Array<Version.VersionItem>;
 }
