@@ -309,6 +309,10 @@ export class DateTime {
 		return new DateTime(new Date(utc), true);
 	}
 
+	public static convert(date: Date): DateTime {
+		return new DateTime(date, false);
+	}
+
 	private static createCore(isUtc: boolean, year: number, month: number, day: number, hour?: number, minute?: number, second?: number, millisecond?: number): DateTime {
 		let date: Date | null = null;
 		if (hour === undefined) {

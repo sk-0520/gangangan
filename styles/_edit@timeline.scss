@@ -86,7 +86,8 @@
 		}
 
 		.cell {
-			filter: invert(100%) grayscale(100%) contrast(100);
+			//filter: invert(100%) grayscale(100%) contrast(100);
+			//filter: grayscale(1) contrast(9999) invert(1);
 		}
 
 		.year-month {

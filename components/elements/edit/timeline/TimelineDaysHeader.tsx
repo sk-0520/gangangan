@@ -1,9 +1,13 @@
 import { NextPage } from "next";
-import { useContext } from "react";
+import { CSSProperties, useContext } from "react";
 
 import { EditContext } from "@/models/data/context/EditContext";
-import { toWeekDay } from "@/models/data/setting/WeekDay";
+import { toWeekDay, WeekDay } from "@/models/data/setting/WeekDay";
 import { useLocale } from "@/models/locales/locale";
+import { Holiday } from "@/models/data/setting/Holiday";
+import * as types from "@/models/core/types";
+import { Theme } from "@/models/data/setting/Theme";
+import { DateTime } from "@/models/core/time";
 
 const Component: NextPage = () => {
 	const locale = useLocale();
@@ -13,6 +17,9 @@ const Component: NextPage = () => {
 		from: new Date(editContext.data.setting.calendar.range.from),
 		to: new Date(editContext.data.setting.calendar.range.to),
 	};
+
+	editContext.data.setting.calendar.holiday.regulars
+	editContext.data.setting.calendar.holiday.events
 
 	const diff = range.to.getTime() - range.from.getTime();
 	const days = diff / (24 * 60 * 60 * 1000);
@@ -39,7 +46,7 @@ const Component: NextPage = () => {
 	}
 	yearMonthBucket.sort((a, b) => {
 		const year = a.year - b.year;
-		if(year) {
+		if (year) {
 			return year;
 		}
 		return a.month - b.month;
@@ -50,32 +57,96 @@ const Component: NextPage = () => {
 	return (
 		<div id='days-header'>
 			<table>
-					<thead>
-						<tr className='year-month'>
-							{yearMonthBucket.map(a => {
+				<thead>
+					<tr className='year-month'>
+						{yearMonthBucket.map(a => {
 
-								const display = `${a.year}/${a.month + 1}`;
+							const display = `${a.year}/${a.month + 1}`;
 
-								return (
-									<td key={display} className={"cell"} colSpan={a.length} style={cellStyle}>{display}</td>
-								);
-							})}
-						</tr>
-						<tr className='day'>
-							{dates.map(a => <td key={a.getTime()} className='cell' style={cellStyle}>{a.getDate()}</td>)}
-						</tr>
-						<tr className='week'>
-							{dates.map(a => <td key={a.getTime()} className='cell' style={cellStyle}>{locale.calendar.week.short[toWeekDay(a.getDay())]}</td>)}
-						</tr>
-					</thead>
-					<tbody>
-						<tr className='pin'>
-							{dates.map(a => <td key={a.getTime()} className='cell' style={cellStyle}>@</td>)}
-						</tr>
-					</tbody>
+							return (
+								<td key={display} className={"cell"} colSpan={a.length} style={cellStyle}>{display}</td>
+							);
+						})}
+					</tr>
+					<tr className='day'>
+						{dates.map(a => {
+							const style = getDayStyles(a, editContext.data.setting.calendar.holiday, editContext.data.setting.theme);
+
+							return (
+								<td key={a.getTime()} className='cell' style={{ ...cellStyle, ...style }}>
+									{a.getDate()}
+								</td>
+							)
+						})}
+					</tr>
+					<tr className='week'>
+						{dates.map(a => {
+							const style = getDayStyles(a, editContext.data.setting.calendar.holiday, editContext.data.setting.theme);
+
+							return (
+								<td key={a.getTime()} className='cell' style={{ ...cellStyle, ...style }}>
+									{locale.calendar.week.short[toWeekDay(a.getDay())]}
+								</td>
+							);
+						})}
+					</tr>
+				</thead>
+				<tbody>
+					<tr className='pin'>
+						{dates.map(a => {
+							const style = getDayStyles(a, editContext.data.setting.calendar.holiday, editContext.data.setting.theme);
+
+							return (
+								<td key={a.getTime()} className='cell' style={{ ...cellStyle, ...style }}>
+									@
+								</td>
+							);
+						})}
+					</tr>
+				</tbody>
 			</table>
 		</div>
 	);
 };
 
 export default Component;
+
+function getWeekDayStyles(date: Date, regulars: Holiday['regulars'], theme: Theme): CSSProperties {
+	const styles: CSSProperties = {};
+
+	for (const regular of regulars) {
+		const weekday = toWeekDay(date.getDay());
+		if (regular === weekday) {
+			const color = theme.holiday.regulars[weekday];
+			if (color) {
+				styles.backgroundColor = color;
+				break;
+			}
+		}
+	}
+
+	return styles;
+}
+
+function getHolidayStyles(date: Date, events: Holiday['events'], theme: Theme): CSSProperties {
+	const styles: CSSProperties = {};
+
+	const dateTime = DateTime.convert(date);
+	const dateText = dateTime.toString('yyyy-MM-dd');
+	if (dateText in events) {
+		const holidayEvent = events[dateText];
+		if (holidayEvent) {
+			const color = theme.holiday.events[holidayEvent.kind];
+			styles.backgroundColor = color;
+		}
+	}
+
+	return styles;
+}
+
+function getDayStyles(date: Date, setting: Holiday, theme: Theme): CSSProperties {
+	const week = getWeekDayStyles(date, setting.regulars, theme);
+	const holiday = getHolidayStyles(date, setting.events, theme);
+
+	return { ...week, ...holiday };
+}

@@ -27,7 +27,7 @@ export function getWeekDays(): Array<WeekDay> {
 }
 
 export function toWeekDay(index: number): WeekDay {
-	switch (index % 7) {
+	switch (index) {
 		case 0:
 			return "sunday";
 		case 1:
@@ -41,7 +41,7 @@ export function toWeekDay(index: number): WeekDay {
 		case 5:
 			return "friday";
 		case 6:
-			return "sunday";
+			return "saturday";
 	}
 
 	throw new Error();
