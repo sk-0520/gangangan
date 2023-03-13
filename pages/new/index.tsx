@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 
 import Layout from "@/components/layout/Layout";
 import * as Goto from "@/models/Goto";
+import * as time from "@/models/core/time";
 import { EditData } from "@/models/data/EditData";
 import * as ISO8601 from "@/models/data/setting/ISO8601";
 import * as Setting from "@/models/data/setting/Setting";
@@ -19,6 +20,9 @@ const Page: NextPage = () => {
 	const router = useRouter();
 	//const { register, handleSubmit, formState: { errors } } = useForm();
 	const { register, handleSubmit, } = useForm<Input>();
+
+	const fromDate = time.DateTime.now();
+	const toDate = fromDate.add(time.TimeSpan.fromDays(365 * 2));
 
 	return (
 		<Layout title='新規作成' mode='page' layoutId='new'>
@@ -45,6 +49,7 @@ const Page: NextPage = () => {
 							開始
 							<input
 								type='date'
+								defaultValue={ fromDate.toString("yyyy-MM-dd") }
 								{...register("dateFrom", {
 									required: {
 										value: true,
@@ -57,6 +62,7 @@ const Page: NextPage = () => {
 						<label>
 							<input
 								type='date'
+								defaultValue={ toDate.toString("yyyy-MM-dd") }
 								{...register("dateTo", {
 									required: {
 										value: true,
